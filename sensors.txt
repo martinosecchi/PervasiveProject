@@ -1,0 +1,38 @@
+
+ultrasonic distance sensor, for low distance (some cm - 2 m)
+infrared sensor for incidence of bin usage
+
+gas sensor:
+	possible candidates for trash smell are
+		
+		CO2 (odorless, but biproduct of a lot of decomposition processes), mostly "good" decomposition, aerobic process
+
+		in lack of oxygen, "smellier" gases are produced:
+		Hydrogen Sulphide H2S
+		Ammonia
+		
+		Methane?
+
+	unfortunately, different sensors for different gasses
+
+networking
+	LoRa, lack of infrastructure, long range, low power, but there would be the need for base stations
+
+	normal mobile network might also work easy
+
+
+
+list of possible gas sensors: 
+	Arduino MQ serires
+		MQ-2 Methane Buthane LPG smoke
+		MQ-4 Methane CNG gas
+		MQ-131 Ozone
+		MQ-136 Hydrogen Sulphide
+		MQ-137 Ammonia
+		MQ-124 Methane Natural gas
+		MG-811 CO2
+
+	Figaro
+		TGS2444, TGS826  Ammonia
+		Methane: a lot
+		TGS2602 VOCs, Ammonia, H2S   http://www.figarosensor.com/products/entry/tgs2602.html
