@@ -1,0 +1,12 @@
+
+
+27-09: get hardware in the pitlab, start hardware protoyping
+4-10: continue hardware prototyping, gas sensor, ultrasonic sensor mainly
+11-10: work on lora shields and lora communication
+18-10: work on lora and receiving end of data
+25-10: machine learning, interpreting results
+1-11: machine learning, interpreting results
+8-11: presentation layer of data
+15-11: presentation layer of data
+
+4 weeks extra time for screwing up
