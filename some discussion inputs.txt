@@ -1,0 +1,9 @@
+
+
+
+future work / discussion:
+		
+		air quality sensor sensitivity changes with humidity - temperature, and gas concentration
+		in regard of gas concentration, it is highly sensible on low concentration, less for high concentrations.
+		temperature: possible improvement, add a termometer to adjust sensor sensitivity, 
+		e.g. in summer it can get pretty hot in a  trash can exposed to the sun.

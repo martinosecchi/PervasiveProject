@@ -36,3 +36,12 @@ list of possible gas sensors:
 		TGS2444, TGS826  Ammonia
 		Methane: a lot
 		TGS2602 VOCs, Ammonia, H2S   http://www.figarosensor.com/products/entry/tgs2602.html
+
+
+SONSORS:
+--------
+
+Figaro TGS 2602  Air quality, odor detection
+Ultrasonic distance sensor 
+LoRa shield
+Arduino kit with lora shield
