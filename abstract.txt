@@ -7,3 +7,13 @@ Fundamental features are the ability to know how much they have been filled and 
 In this paper, we will discuss our approach in building a prototype that involves smell sensors able to capture and measure bad odor emitted from the trash, in terms of gases bioproducts of decomposition.
 This approach allows smart bins to be used in more and different scenarios than the average products available.
 We will present hardware characteristics, produced information, test cases and discuss the results.
+
+::
+
+Since the dawn of the modern age, consumer waste has always been around in the periphery.
+How we handle the waste has traditionally been a logistics issue, imagine it becoming something different.
+The SmartBin perceives the thrash as something more than a pile of waste - it is also something smelly!
+The emphasis is on improving the indoor environment to ultimately improve the quality of life by detecting odors.
+The technology enhancing the bin uses sensors which detect gas emissions, mainly the ones occuring in decomposition of organic materials.
+If any of these values exceed the threshold the SmartBin will react accordingly, supported by state of the art machine learning techniques.
+Any specifics will be listed in the following document. This will range from hardware prototyping to evaluation of the product.
