@@ -1,0 +1,11 @@
+
+
+
+urban planning, optimizing collection -> use lora, crowd sourcing, machine learning
+
+private sector:
+	- people who can't smell, or have reducted smell sense (scent impaired)
+	- elderly people, they can't take the trash out by the selves, some assistant is notified if he needs to come outside scheduled hours to clean up / take out trash
+
+	- apartment buildings? (like shaft rooms, basement)
+

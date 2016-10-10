@@ -1,0 +1,9 @@
+
+
+abstract
+
+Technology enhanced trash cans have already been subject to research and have become available as market products.
+Fundamental features are the ability to know how much they have been filled and to communicate such information for urban planning purposes or logistics optimization.
+In this paper, we will discuss our approach in building a prototype that involves smell sensors able to capture and measure bad odor emitted from the trash, in terms of gases bioproducts of decomposition.
+This approach allows smart bins to be used in more and different scenarios than the average products available.
+We will present hardware characteristics, produced information, test cases and discuss the results.

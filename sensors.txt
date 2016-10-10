@@ -38,7 +38,7 @@ list of possible gas sensors:
 		TGS2602 VOCs, Ammonia, H2S   http://www.figarosensor.com/products/entry/tgs2602.html
 
 
-SONSORS:
+SENSORS:
 --------
 
 Figaro TGS 2602  Air quality, odor detection
