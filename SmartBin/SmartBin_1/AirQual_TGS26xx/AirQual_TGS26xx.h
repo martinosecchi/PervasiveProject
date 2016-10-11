@@ -7,12 +7,20 @@
 
 #include "Arduino.h"
 
+#define         SEN_02                       (1)
+#define         SEN_00                       (0)
 #define         GAS_H2                       (0)
 #define         GAS_C2H5OH                   (1) //Alcohol, Ethanol
 #define         GAS_C4H10                    (2)
 #define         GAS_C7H8                     (3) //Toluene
 #define         GAS_H2S                      (4) //Hydrogen Sulfide
 #define         GAS_NH3                      (5) //Ammonia
+
+#define         CALIBRATION_SAMPLE_TIMES     (50)    //define how many samples you are going to take in the calibration phase
+#define         CALIBRATION_SAMPLE_INTERVAL  (500)   //define the time interal(in milisecond) between each samples in the
+                                                     //cablibration phase
+#define         READ_SAMPLE_INTERVAL         (50)    //define how many samples you are going to take in normal operation
+#define         READ_SAMPLE_TIMES            (5)     //define the time interal(in milisecond) between each samples in 
 
 class TGS26xx
 {
@@ -21,10 +29,9 @@ class TGS26xx
     TGS2602(int pin);
 	int  GetGasPercentage(float rs_ro_ratio, float ro, int gas_id);
   private:
-	int   MQGetPercentage(float rs_ro_ratio, float ro, float *pcurve);
-	float MQCalibration(int mq_pin, double ppm, double rl_value, float *pcurve )
-	float MQResistanceCalculation(int raw_adc,float rl_value);
-    int   _pin;
+  TGS26xx(int pin, int type);
+    int _pin;
+	int _type;
 	float           C2H5OH_secCurve[2]  = {0.2995093465,  -3.148170562};	//TGS2600
 	float           C2H5OH_terCurve[2]  = {2142.297846,   -2.751369226};  //MQ138 (3,200) (1.8,1000) (0.7,10000)
 	float           C2H5OH_quarCurve[2] = {0.5409499131,  -2.312489623};  //TGS2602   (0.75,1)  (0.3,10)  (0.17,30) 
@@ -34,8 +41,9 @@ class TGS26xx
 	float           H2S_Curve[2]        = {0.05566582614, -2.954075758}; 	//TGS2602   (0.8,0.1) 	(0.4,1) 	(0.25,3)
 	float           NH3_Curve[2]        = {0.585030495,   -3.448654502};  //TGS2602   (0.8,1) 	(0.5,10) 	(0.3,30) 
 	float           Ro                  = 10000;                          //Ro is initialized to 10 kilo ohms
-
+	int   MQGetPercentage(float rs_ro_ratio, float ro, float *pcurve);
+	float MQCalibration(int mq_pin, double ppm, double rl_value, float *pcurve )
+	float MQResistanceCalculation(int raw_adc,float rl_value);
 };
-
 
 #endif

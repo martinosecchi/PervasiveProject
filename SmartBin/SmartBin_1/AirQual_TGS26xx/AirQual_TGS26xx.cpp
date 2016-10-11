@@ -6,30 +6,60 @@
 #include "AirQual_TGS26xx.h"
 
 TGS26xx::TGS2600(int pin) {
-	_pin = pin;
+	TGS26xx(pin, SEN_00);
 }
 
-{
-  public:
-    TGS2600(int pin);
-    TGS2602(int pin);
-	int  GetGasPercentage(float rs_ro_ratio, float ro, int gas_id);
-  private:
-	int   MQGetPercentage(float rs_ro_ratio, float ro, float *pcurve);
-	float MQCalibration(int mq_pin, double ppm, double rl_value, float *pcurve )
-	float MQResistanceCalculation(int raw_adc,float rl_value);
-    int   _pin;
-	float           C2H5OH_secCurve[2]  = {0.2995093465,  -3.148170562};	//TGS2600
-	float           C2H5OH_terCurve[2]  = {2142.297846,   -2.751369226};  //MQ138 (3,200) (1.8,1000) (0.7,10000)
-	float           C2H5OH_quarCurve[2] = {0.5409499131,  -2.312489623};  //TGS2602   (0.75,1)  (0.3,10)  (0.17,30) 
-	float           C4H10Curve[2]       = {0.3555567714,  -3.337882361}; 	//TGS2600
-	float           H2_terCurve[2]      = {0.3417050674,  -2.887154835}; 	//TGS2600
-	float           C7H8Curve[2]        = {37.22590719,    2.078062258}; 	//TGS2602   (0.3;1)		(0.8;10) 	(0.4;30)
-	float           H2S_Curve[2]        = {0.05566582614, -2.954075758}; 	//TGS2602   (0.8,0.1) 	(0.4,1) 	(0.25,3)
-	float           NH3_Curve[2]        = {0.585030495,   -3.448654502};  //TGS2602   (0.8,1) 	(0.5,10) 	(0.3,30) 
-	float           Ro                  = 10000;                          //Ro is initialized to 10 kilo ohms
+TGS26xx::TGS2602(int pin) {
+	TGS26xx(pin, SEN_02);
+}
 
-};
+TGS26xx::TGS26xx(int pin, int type) {
+	_pin = pin;
+	_type = type;
+}
 
+int TGS26xx:GetGasPercentage(float rs_ro_ratio, float ro, int gas_id) {
+	if (_type == SEN_00 ){
+		if ( gas_id == GAS_C2H5OH ) {
+		  return MQGetPercentage(rs_ro_ratio,ro,C2H5OH_terCurve);  //TGS2600
+		} else if ( gas_id == GAS_C4H10 ) {
+		   return MQGetPercentage(rs_ro_ratio,ro,C4H10Curve);   //TGS2600
+		} else if ( gas_id == GAS_H2 ) {
+		   return MQGetPercentage(rs_ro_ratio,ro,H2_terCurve);  //TGS2600
+		}    
+   }
+   if (_type == SEN_02 ){
+		if ( gas_id == GAS_C7H8 ) {
+		  return MQGetPercentage(rs_ro_ratio,ro,C7H8Curve);  //TGS2602
+		} else if ( gas_id == GAS_H2S ) {
+		  return MQGetPercentage(rs_ro_ratio,ro,H2S_Curve);  //TGS2602
+		} else if ( gas_id == GAS_NH3 ) {
+		  return MQGetPercentage(rs_ro_ratio,ro,NH3_Curve);  //TGS2602
+		} else if ( gas_id == GAS_C2H5OH ) {
+		  return MQGetPercentage(rs_ro_ratio,ro,C2H5OH_quarCurve);  //TGS2602
+		}
+   }	
+  return 0;	
+}
 
-#endif
+int TGS26xx:MQGetPercentage(float rs_ro_ratio, float ro, float *pcurve) {
+	  return (double)(pcurve[0] * pow(((double)rs_ro_ratio/ro), pcurve[1]));
+}
+
+float TGS26xx:MQCalibration(int mq_pin, double ppm, double rl_value, float *pcurve) {
+	int i;
+	float val=0;
+
+	for (i=0;i<CALIBRATION_SAMPLE_TIMES;i++) {            //take multiple samples
+	  val += MQResistanceCalculation(analogRead(mq_pin),rl_value);
+	  delay(CALIBRATION_SAMPLE_INTERVAL);
+	}
+	val = val/CALIBRATION_SAMPLE_TIMES;                   //calculate the average value
+	//Ro = Rs * sqrt(a/ppm, b) = Rs * exp( ln(a/ppm) / b )
+
+	return  (long)val*exp((log(pcurve[0]/ppm)/pcurve[1]));
+}
+
+float TGS26xx::MQResistanceCalculation(int raw_adc,float rl_value) {
+  return  (long)((long)(1024*1000*(long)rl_value)/raw_adc-(long)rl_value);	
+}

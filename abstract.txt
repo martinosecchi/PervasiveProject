@@ -17,3 +17,14 @@ The emphasis is on improving the indoor environment to ultimately improve the qu
 The technology enhancing the bin uses sensors which detect gas emissions, mainly the ones occuring in decomposition of organic materials.
 If any of these values exceed the threshold the SmartBin will react accordingly, supported by state of the art machine learning techniques.
 Any specifics will be listed in the following document. This will range from hardware prototyping to evaluation of the product.
+
+...more work needed. !! Premature papers !
+
+WHAT - WHY - HOW
+
+problem - however - solution!
+
+## Brilliant sentences to be used in our paper!! ##
+In a world full of THRASH papers!
+Time should not be wasted!
+Scentient bin ! (Scent vs. sentient)
