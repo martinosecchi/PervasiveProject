@@ -10,6 +10,7 @@
 \usepackage{graphics} % for EPS, load graphicx instead
 \usepackage{times}    % comment if you want LaTeX's default font
 \usepackage{url}      % llt: nicely formatted URLs
+\usepackage{color}
 
 % llt: Define a global style for URLs, rather that the default one
 \makeatletter
@@ -48,6 +49,7 @@ breaklinks=true,
 
 % create a shortcut to typeset table headings
 \newcommand\tabhead[1]{\small\textbf{#1}}
+\newcommand\todo[1]{\textcolor{red}{#1}}
 
 
 % End of preamble. Here it comes the document.
@@ -72,17 +74,10 @@ breaklinks=true,
 \keywords{
 	Guides; instructions; author's kit; conference publications;
 	keywords should be separated by a semi-colon.
-	\textcolor{red}{Mandatory section to be included in your final version.}
 }
 
 \category{H.5.m.}{Information Interfaces and Presentation (e.g. HCI)}{Miscellaneous}
 
-See: \url{http://www.acm.org/about/class/1998/}
-for more information and the full list of ACM classifiers
-and descriptors. 
-\textcolor{red}{Mandatory section to be included in your
-final version. On the submission page only the classifiers'
-letter-number combination will need to be entered.}
 
 \terms{
 	Human Factors; Design; Measurement. 
@@ -93,9 +88,18 @@ letter-number combination will need to be entered.}
 See list of the limited ACM 16 terms in the
 instructions and additional information:
 \url{http://www.sheridanprinting.com/sigchi/generalterms.htm}.
-\textcolor{red}{Optional section to be included in your final version.}
 
 \section{Introduction}
+
+
+\section{Related Work}
+
+This is not the first paper about Smart Waste Management Systems (WMS).
+Other researches explored interesting IoT approaches to the problem, mostly in relation to planning garbage collection and / or waste reduction.
+\todo{...many, pick one or two... like in Australia, France} implemented an RFID and weight  based approach for a real time automated WMS, with the main focus on bringing down management costs and facilitate automating waste identification.
+\todo{ citation to korean guys } in another study used a similar approach to identify food waste in a selected area of Seul, South Korea.
+\todo{ cite catania} In another study, Vincenzo Catania and his colleagues used a Smart-M3 Platform and sensor enhanced bins in Catania, Italy with the main focus on urban planning, smart collection and  monitoring of urban solid waste. In this case, the information that was collected was on the location of the trash can, level of fullness, and weight of the waste.
+
 
 
 
