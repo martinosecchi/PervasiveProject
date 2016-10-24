@@ -1,0 +1,104 @@
+\documentclass{sigchi}
+
+% Arabic page numbers for submission. 
+% Remove this line to eliminate page numbers for the camera ready copy
+%\pagenumbering{arabic}
+
+
+% Load basic packages
+\usepackage{balance}  % to better equalize the last page
+\usepackage{graphics} % for EPS, load graphicx instead
+\usepackage{times}    % comment if you want LaTeX's default font
+\usepackage{url}      % llt: nicely formatted URLs
+
+% llt: Define a global style for URLs, rather that the default one
+\makeatletter
+\def\url@leostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\bf\ttfamily}}}
+\makeatother
+\urlstyle{leo}
+
+
+% To make various LaTeX processors do the right thing with page size.
+\def\pprw{8.5in}
+\def\pprh{11in}
+\special{papersize=\pprw,\pprh}
+\setlength{\paperwidth}{\pprw}
+\setlength{\paperheight}{\pprh}
+\setlength{\pdfpagewidth}{\pprw}
+\setlength{\pdfpageheight}{\pprh}
+
+% Make sure hyperref comes last of your loaded packages, 
+% to give it a fighting chance of not being over-written, 
+% since its job is to redefine many LaTeX commands.
+\usepackage[pdftex]{hyperref}
+\hypersetup{
+pdftitle={report},
+pdfauthor={LaTeX},
+pdfkeywords={SIGCHI, proceedings, archival format},
+bookmarksnumbered,
+pdfstartview={FitH},
+colorlinks,
+citecolor=black,
+filecolor=black,
+linkcolor=black,
+urlcolor=black,
+breaklinks=true,
+}
+
+% create a shortcut to typeset table headings
+\newcommand\tabhead[1]{\small\textbf{#1}}
+
+
+% End of preamble. Here it comes the document.
+\begin{document}
+
+\title{Smart Bin - An Odor Oriented Approach}
+
+\numberofauthors{2}
+\author{
+  \alignauthor Ivan Naumovski\\
+    \email{inau@itu.dk}\\
+  \alignauthor Martino Secchi\\
+    \email{msec@itu.dk}\\
+}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\keywords{
+	Guides; instructions; author's kit; conference publications;
+	keywords should be separated by a semi-colon.
+	\textcolor{red}{Mandatory section to be included in your final version.}
+}
+
+\category{H.5.m.}{Information Interfaces and Presentation (e.g. HCI)}{Miscellaneous}
+
+See: \url{http://www.acm.org/about/class/1998/}
+for more information and the full list of ACM classifiers
+and descriptors. 
+\textcolor{red}{Mandatory section to be included in your
+final version. On the submission page only the classifiers'
+letter-number combination will need to be entered.}
+
+\terms{
+	Human Factors; Design; Measurement. 
+	If you choose more than one ACM General Term, 
+	separate the terms with a semi-colon.
+}
+
+See list of the limited ACM 16 terms in the
+instructions and additional information:
+\url{http://www.sheridanprinting.com/sigchi/generalterms.htm}.
+\textcolor{red}{Optional section to be included in your final version.}
+
+\section{Introduction}
+
+
+
+\bibliographystyle{acm-sigchi}
+\bibliography{ubicomp}
+\end{document}
