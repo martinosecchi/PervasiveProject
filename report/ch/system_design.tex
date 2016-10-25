@@ -1,0 +1,18 @@
+In this section we describe the overall system characteristics proposed for our approach to waste management.\\
+The system is composed of two main components:
+\begin{itemize}
+\item sensory layer: responsible of producing information.
+\item information layer: responsible of collecting and presenting information.
+\end{itemize}
+
+\subsection{sensory layer}
+Our approach relies on two kinds of information related to the state of the bin: smell and fill level.
+For this reason, the sensory part of the system is of key importance, since it enables the information to be perceived and registered by the system.
+An odor detection sensor is able to capture volatile organic compounds (VOCs) and other gases, typical bioproducts of food decomposition, commonly associated with bad smell. 
+Some examples are Hydrogen Sulphide, Ammonia, Toluene and others.
+When the presence of one of these gases exceeds a given boundary, the sensor will report bad smell.
+The second sensor will be placed on the top of the trash can, in order to measure the distance to the trash level and report about fullness.
+
+\subsection{information layer}
+Having obtained the information is only the first step though, the next one is to make it available.
+Our system uses a web service for collecting the data and storing it in a database, making it accessible to potential consumers.
