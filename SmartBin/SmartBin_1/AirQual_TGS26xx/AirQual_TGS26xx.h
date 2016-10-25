@@ -25,11 +25,14 @@
 class TGS26xx
 {
   public:
-    TGS2600(int pin);
-    TGS2602(int pin);
+    TGS26xx TGS2600(int pin) { return TGS26xx(pin, SEN_00); };
+    TGS26xx TGS2602(int pin) { return TGS26xx(pin, SEN_02); };
 	int  GetGasPercentage(float rs_ro_ratio, float ro, int gas_id);
   private:
-  TGS26xx(int pin, int type);
+	TGS26xx(int pin, int type) {
+		_pin = pin;
+		_type = type;
+	};
     int _pin;
 	int _type;
 	float           C2H5OH_secCurve[2]  = {0.2995093465,  -3.148170562};	//TGS2600
@@ -42,7 +45,7 @@ class TGS26xx
 	float           NH3_Curve[2]        = {0.585030495,   -3.448654502};  //TGS2602   (0.8,1) 	(0.5,10) 	(0.3,30) 
 	float           Ro                  = 10000;                          //Ro is initialized to 10 kilo ohms
 	int   MQGetPercentage(float rs_ro_ratio, float ro, float *pcurve);
-	float MQCalibration(int mq_pin, double ppm, double rl_value, float *pcurve )
+	float MQCalibration(int mq_pin, double ppm, double rl_value, float *pcurve );
 	float MQResistanceCalculation(int raw_adc,float rl_value);
 };
 

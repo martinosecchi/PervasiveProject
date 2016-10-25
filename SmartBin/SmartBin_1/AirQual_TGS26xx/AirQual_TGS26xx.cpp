@@ -3,20 +3,9 @@
   Created by Ivan Naumovski, inau @ github.com.
 **/
 #include "Arduino.h"
+#include <SPI.h>
+#include <Wire.h> 
 #include "AirQual_TGS26xx.h"
-
-TGS26xx::TGS2600(int pin) {
-	TGS26xx(pin, SEN_00);
-}
-
-TGS26xx::TGS2602(int pin) {
-	TGS26xx(pin, SEN_02);
-}
-
-TGS26xx::TGS26xx(int pin, int type) {
-	_pin = pin;
-	_type = type;
-}
 
 int TGS26xx:GetGasPercentage(float rs_ro_ratio, float ro, int gas_id) {
 	if (_type == SEN_00 ){
@@ -41,11 +30,9 @@ int TGS26xx:GetGasPercentage(float rs_ro_ratio, float ro, int gas_id) {
    }	
   return 0;	
 }
-
 int TGS26xx:MQGetPercentage(float rs_ro_ratio, float ro, float *pcurve) {
 	  return (double)(pcurve[0] * pow(((double)rs_ro_ratio/ro), pcurve[1]));
 }
-
 float TGS26xx:MQCalibration(int mq_pin, double ppm, double rl_value, float *pcurve) {
 	int i;
 	float val=0;
@@ -59,7 +46,6 @@ float TGS26xx:MQCalibration(int mq_pin, double ppm, double rl_value, float *pcur
 
 	return  (long)val*exp((log(pcurve[0]/ppm)/pcurve[1]));
 }
-
 float TGS26xx::MQResistanceCalculation(int raw_adc,float rl_value) {
   return  (long)((long)(1024*1000*(long)rl_value)/raw_adc-(long)rl_value);	
 }
