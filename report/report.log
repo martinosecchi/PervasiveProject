@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.8.26)  25 OCT 2016 15:53
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.8.26)  25 OCT 2016 16:15
 entering extended mode
 **D:/Workspaces/PervasiveProject/report/report.tex
 (D:/Workspaces/PervasiveProject/report/report.tex
@@ -414,7 +414,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 117.
 Here is how much of TeX's memory you used:
  6059 strings out of 493921
  87153 string characters out of 3144879
- 170647 words of memory out of 3000000
+ 171647 words of memory out of 3000000
  9244 multiletter control sequences out of 15000+200000
  21206 words of font info for 47 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -444,7 +444,7 @@ pdfTeX warning (dest): name{section*.4} has been referenced but does not exist,
 Files (x86)/MiKTeX 2.9/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files (x
 86)/MiKTeX 2.9/fonts/type1/urw/times/utmb8a.pfb><C:/Program Files (x86)/MiKTeX 
 2.9/fonts/type1/urw/times/utmr8a.pfb>
-Output written on report.pdf (1 page, 44631 bytes).
+Output written on report.pdf (1 page, 45389 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  19 named destinations out of 1000 (max. 500000)
