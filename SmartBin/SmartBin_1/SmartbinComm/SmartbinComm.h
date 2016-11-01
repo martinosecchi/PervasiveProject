@@ -11,11 +11,13 @@
 
 class SmartBinComm {
 	private:
+		void Send(char[] message);
+		SmartBinComm();
 		
 	public:
-		SmartBinComm();
+		SmartBinComm Connect();
 		void SendSensorLabels();
-		void SendGasValues(String[] labels, float[] values);
+		void SendGasValues(char[][] labels, float[] values);
 		void SendSensorState(int sensor, int value);
 }
 
