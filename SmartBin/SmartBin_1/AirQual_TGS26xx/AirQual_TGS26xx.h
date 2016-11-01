@@ -27,12 +27,12 @@ class TGS26xx
   public:
     static TGS26xx TGS2600(int pin) {
     	TGS26xx sensor = TGS26xx(pin, SEN_00);
-		sensor.Ro3 = sensor.MQCalibration(pin,10,sensor.RL3,sensor.C2H5OH_terCurve);
+		//sensor.Ro3 = sensor.MQCalibration(pin,10,sensor.RL3,sensor.C2H5OH_terCurve);
 	    return  sensor;
 	 };
     static TGS26xx TGS2602(int pin) { 
     	TGS26xx sensor = TGS26xx(pin, SEN_02); 
-    	sensor.Ro6 = sensor.MQCalibration(pin,1,sensor.RL6,sensor.C7H8Curve);
+    	//sensor.Ro6 = sensor.MQCalibration(pin,1,sensor.RL6,sensor.C7H8Curve);
     	return sensor; 
     };
 	int  GetGasPercentage(int gas_id);
@@ -40,6 +40,8 @@ class TGS26xx
 		_pin = -1;
 		_type = -1;
 	}
+  float MQReadRoRS();
+  float MQGetRo(); 
   private:
 	TGS26xx(int pin, int type) {
 		_pin = pin;

@@ -9,13 +9,15 @@
 
 int TGS26xx::GetGasPercentage(int gas_id) {
 	float rs_ro_ratio;
-	float ro = Ro;
+	float ro; //= Ro;
 
-	if (_type == SEN_00)
+	if (_type == SEN_00){
+	  ro = Ro3;
 		rs_ro_ratio = MQRead(Ro3);
-	else if (_type == SEN_02)
+	}else if (_type == SEN_02){
+    ro = Ro6;
 		rs_ro_ratio = MQRead(Ro6);
-	else 
+	}else 
 		return 0;
 
 	if (_type == SEN_00 ){
@@ -40,6 +42,19 @@ int TGS26xx::GetGasPercentage(int gas_id) {
    }	
   return 0;	
 }
+float TGS26xx::MQReadRoRS(){
+  float ro = MQGetRo();
+  return MQRead(ro);
+}
+
+  float TGS26xx::MQGetRo(){
+      if (_type == SEN_00){
+        return Ro3;
+      }else if (_type == SEN_02){
+        return Ro6;
+      }else 
+        return 0;
+  }
 int TGS26xx::MQGetPercentage(float rs_ro_ratio, float ro,  float *pcurve) {
 	  return (double)(pcurve[0] * pow(((double)rs_ro_ratio/ro), pcurve[1]));
 }

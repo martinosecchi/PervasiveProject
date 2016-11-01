@@ -51,7 +51,7 @@ float           H2S_Curve[2]        = {0.05566582614, -2.954075758}; 	//TGS2602 
 float           NH3_Curve[2]        = {0.585030495,   -3.448654502};  //TGS2602   (0.8,1) 	(0.5,10) 	(0.3,30) 
 float           Ro                  = 10000;                          //Ro is initialized to 10 kilo ohms
 
-unsigned long SLEEP_TIME = 600; // Sleep time between reads (in seconds)
+unsigned long SLEEP_TIME = 6; // Sleep time between reads (in seconds)
 //VARIABLES
 float Ro3 = 2.511;    //TGS2600 0.05 this has to be tuned 10K Ohm
 float RL3 = 0.893;    //TGS2600 Sainsmart
@@ -66,6 +66,7 @@ boolean metric = true;
 
 void setup()  
 { 
+  Serial.begin(9600);
 //  delay(50*1000); //delay to allow serial to fully print before sleep
   Serial.print("    TGS2600:"); 
   Ro3 = MQCalibration(TGS2600_SENSOR,10,RL3,C2H5OH_terCurve);
