@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SmartbinApi</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="scripts/tables.js"></script>
+  </head>
+  <body class ="f1">
+  <div class="pane">
+  <h1>Smartbin API</h1>
+    <div class="stylish" >
+	<img src="img/logo.png" alt="Smartbin Logo" >
+  </div>
+  <hr>
+  
+  <div class="stylish">
+  <b>Rest Api:</b><hr>
+  <a href="/r/bins">/r/bins</a><br>
+  </div>
+  <br>
+  
+  <div class="stylish">
+  <b>You can filter by using following parameter notation appended to above urls on GET requests:</b><hr>
+  '?key='bin_key'&lat='val'&lng='val''</div>
+  <br>
+  <div class="stylish">
+  <b>You should use following JSON object types as payloads on POST requests:</b><hr>
+  
+  <u>SmartBin JSON:</u><br>
+  {<b>"key"</b>:"val", <b>"concentration</b>":"val", <b>"level"</b>:"val", <b>"lat"</b>:"val", <b>"lng"</b>:"val"}<br>
+  <u>Overwrites</u>: If the Key labelled <b>"key"</b> associated with the entity has already been used.</div>
+  <br>
+  
+  	<div class="pane" >
+	  	<b>SmartBins:</b><hr>
+    <table id="binTbl" class="tbl">
+    <tr id="hdRow" class="tdHead">
+	    	<td>Key</td>
+    	    <td>Latitude</td>
+    	    <td>Longitude</td>
+            <td>Concentration</td>
+            <td>Level</td>
+    </tr>
+    </table>
+  	</div>
+    
+      <script>
+/*$(document).ready(function() {
+	var btbl = document.getElementById('binTbl');
+  	$.getJSON('/r/bins', function(data) {
+			populateBintable(btbl, data);
+  	});
+});*/
+    </script>
+  
+  </body>
+</html>
