@@ -20,7 +20,7 @@ import com.googlecode.objectify.Result;
 import servlet.entities.SmartbinEntity;
 
 public class SmartbinServlet extends HttpServlet {
-	final static long M_range = 0.00005L;
+	final static long M_range = (long)0.00005;
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -28,43 +28,46 @@ public class SmartbinServlet extends HttpServlet {
 
 
 
-		List<BeaconEntity> bins = null;
+		List<SmartbinEntity> bins = null;
 		try {
 			String _key = req.getParameter("key"), p1 = req.getParameter("lat"), p2 = req.getParameter("lng");
 			if( isValidArg(_key) ) {
 				bins = new ArrayList<SmartbinEntity>();
-				bins.add( (BeaconEntity)ofy().load().key(_key).now() );
-				doResponse(resp, bins);
-				return;
+				SmartbinEntity sbe = null;
+				sbe = ofy().load().type(SmartbinEntity.class).id(_key).now();
+				if(sbe == null) throw new Exception("no such element");
+				bins.add( sbe );
+				Gson gson = new Gson();
+				resp.setContentType("application/json");
+				gson.toJson(bins, resp.getWriter());
 			}
-			if( isValidArg(p1) && isValidArg(p2) ) {
+			else if( isValidArg(p1) && isValidArg(p2) ) {
 				//checks if input params are actual values
 				Long  	lat = Long.parseLong( p1 ),
 						lng = Long.parseLong( p2 );    		
 				if(lat != null && lng != null) {
-					ArrayList<SmartbinEntity> all = ofy().load().type(SmartbinEntity.class).list();
+					List<SmartbinEntity> all = ofy().load().type(SmartbinEntity.class).list();
 					//filters the cached values if lat/lng has values
 					bins = new ArrayList<SmartbinEntity>();
-					for (Smartbin sb : all) {
-						if( filterRangeLocation(lat, lng, sb) ) bins.add(be);
+					for (SmartbinEntity sb : all) {
+						if( filterRangeLocation(lat, lng, sb) ) bins.add(sb);
 					}
-					doResponse(resp, bins);
-					return;
+					Gson gson = new Gson();
+					resp.setContentType("application/json");
+					gson.toJson(bins, resp.getWriter());
 				}
+			} else {
+				List<SmartbinEntity> all = ofy().load().type(SmartbinEntity.class).list();
+				Gson gson = new Gson();
+				resp.setContentType("application/json");
+				gson.toJson(all, resp.getWriter());
 			}
 		} catch (Exception e) {}
 		
 	}
-	
-	void doResponse(HttpServletResponse resp, List<BeaconEntity> bins) {
-		Gson gson = new Gson();
-		resp.setContentType("application/json");
-		gson.toJson(bins, resp.getWriter());
-
-	}
 
 	//Objectify only allows to filter on 1 property at a time so we filter in the ws requests
-	private boolean filterRangeLocation(long lat, long lng, BeaconEntity be) {
+	private boolean filterRangeLocation(long lat, long lng, SmartbinEntity be) {
 		return 	(be.lat <= (lat + M_range)) 	&&
 				(be.lat >= (lat - M_range)) 	&&
 				(be.lng <= (lng + M_range)) 	&&
@@ -93,15 +96,15 @@ public class SmartbinServlet extends HttpServlet {
 
 		//new key or no key
 		if ( res == null ) {
-			com.googlecode.objectify.Key<BeaconEntity> k = ofy().save().entity(sbe).now();
-			gson.toJson( (BeaconEntity)ofy().load().key(k).now() , resp.getWriter());
+			com.googlecode.objectify.Key<SmartbinEntity> k = ofy().save().entity(sbe).now();
+			gson.toJson( (SmartbinEntity)ofy().load().key(k).now() , resp.getWriter());
 		}
 		//existing entity - merge
 		else {
 			res.lat = sbe.lat;
 			res.lng = sbe.lng;
-			com.googlecode.objectify.Key<BeaconEntity> k = ofy().save().entity(res).now();
-			gson.toJson( (BeaconEntity)ofy().load().key(k).now(), resp.getWriter());
+			com.googlecode.objectify.Key<SmartbinEntity> k = ofy().save().entity(res).now();
+			gson.toJson( (SmartbinEntity)ofy().load().key(k).now(), resp.getWriter());
 		}
 	}
 
