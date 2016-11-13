@@ -4,8 +4,8 @@
     <version>1</version>
     <threadsafe>true</threadsafe>
 <static-files>
-	<include path="/styles"/>
-	<include path="/img"/>
-	<include path="/scripts"/>
+	<include path="/styles/*"/>
+	<include path="/img/*"/>
+	<include path="/scripts/*"/>
 </static-files>
 </appengine-web-app>

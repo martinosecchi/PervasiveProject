@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -21,6 +22,7 @@ import servlet.entities.SmartbinEntity;
 
 public class SmartbinServlet extends HttpServlet {
 	final static long M_range = (long)0.00005;
+	final static HashMap<String, Long> mappings = new HashMap<String, Long>();
 	
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -34,12 +36,10 @@ public class SmartbinServlet extends HttpServlet {
 			if( isValidArg(_key) ) {
 				bins = new ArrayList<SmartbinEntity>();
 				SmartbinEntity sbe = null;
-				sbe = ofy().load().type(SmartbinEntity.class).id(_key).now();
+				long id = lookupId(_key);
+				sbe = ofy().load().type(SmartbinEntity.class).id(id).now();
 				if(sbe == null) throw new Exception("no such element");
 				bins.add( sbe );
-				Gson gson = new Gson();
-				resp.setContentType("application/json");
-				gson.toJson(bins, resp.getWriter());
 			}
 			else if( isValidArg(p1) && isValidArg(p2) ) {
 				//checks if input params are actual values
@@ -52,17 +52,14 @@ public class SmartbinServlet extends HttpServlet {
 					for (SmartbinEntity sb : all) {
 						if( filterRangeLocation(lat, lng, sb) ) bins.add(sb);
 					}
-					Gson gson = new Gson();
-					resp.setContentType("application/json");
-					gson.toJson(bins, resp.getWriter());
 				}
 			} else {
-				List<SmartbinEntity> all = ofy().load().type(SmartbinEntity.class).list();
-				Gson gson = new Gson();
-				resp.setContentType("application/json");
-				gson.toJson(all, resp.getWriter());
+					bins = ofy().load().type(SmartbinEntity.class).list();
 			}
-		} catch (Exception e) {}
+			doGetResponse(resp, bins);
+		} catch (Exception e) {
+			doGetResponse(resp, "Exception "+e);
+		}
 		
 	}
 
@@ -75,14 +72,14 @@ public class SmartbinServlet extends HttpServlet {
 	}
 
 	private boolean isValidArg(String arg) {
-		return arg != null || arg != "";
+		return arg != null && arg != "";
 	}
 	
 	// Process the http POST of the form
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Gson gson = new Gson();
-
+		long id = -1;
 		String rawJson = new BufferedReader(
 				new InputStreamReader( req.getInputStream() )
 				).readLine();
@@ -91,21 +88,46 @@ public class SmartbinServlet extends HttpServlet {
 		SmartbinEntity res = null;
 
 		//lookup tables by id
-		if( sbe.key != null )
-		res = ofy().load().type(SmartbinEntity.class).id(sbe.key).now();
-
+		if( sbe.key != null ) {
+			id = lookupId(sbe.key);
+			res = ofy().load().type(SmartbinEntity.class).id(id).now();
+		}
+		com.googlecode.objectify.Key<SmartbinEntity> k;
 		//new key or no key
 		if ( res == null ) {
-			com.googlecode.objectify.Key<SmartbinEntity> k = ofy().save().entity(sbe).now();
-			gson.toJson( (SmartbinEntity)ofy().load().key(k).now() , resp.getWriter());
+			k = ofy().save().entity(sbe).now();
 		}
 		//existing entity - merge
 		else {
-			res.lat = sbe.lat;
-			res.lng = sbe.lng;
-			com.googlecode.objectify.Key<SmartbinEntity> k = ofy().save().entity(res).now();
-			gson.toJson( (SmartbinEntity)ofy().load().key(k).now(), resp.getWriter());
+			res = mergeBinEntity(res, sbe);
+			k = ofy().save().entity( res ).now();
 		}
+		updateMap(res.key, res.id);
+		gson.toJson( (SmartbinEntity)ofy().load().key(k).now(), resp.getWriter());
+	}
+	
+	private SmartbinEntity mergeBinEntity(SmartbinEntity fromDS, SmartbinEntity fromReq) {		
+		fromDS.key = fromReq.key != null && fromReq.key != fromDS.key ? fromReq.key : fromDS.key;
+		fromDS.lat = fromReq.lat != fromDS.lat ? fromReq.lat : fromDS.lat;
+		fromDS.lng = fromReq.lng != fromDS.lng ? fromReq.lng : fromDS.lng;
+		fromDS.concentration = fromReq.concentration != fromDS.concentration ? fromReq.concentration : fromDS.concentration;
+		fromDS.level = fromReq.level != fromReq.level ? fromReq.level : fromDS.level;
+		
+		return fromDS;
+	}
+	
+	private void doGetResponse(HttpServletResponse resp, Object data) throws IOException {
+		Gson gson = new Gson();
+		resp.setContentType("application/json");
+		gson.toJson(data, resp.getWriter());
 	}
 
+	private void updateMap(String key, long id) {
+		this.mappings.put(key, id);
+	}
+	
+	private long lookupId(String key) {
+		return this.mappings.get(key) == null ? -1 : this.mappings.get(key);
+	}
+	
 }

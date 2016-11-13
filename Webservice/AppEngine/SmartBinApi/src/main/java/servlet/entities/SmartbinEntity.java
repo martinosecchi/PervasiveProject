@@ -9,22 +9,20 @@ import com.googlecode.objectify.annotation.Index;
 @Entity
 public class SmartbinEntity {
 	
-	@Id
-	public String key;
-	@Index
+	@Id public String key;
 	public long lat, lng;
 	public long concentration, level;
 
 	public SmartbinEntity() {
 	}
 	
-	public SmartbinEntity(String key, long lat, long lng, long concentration, long level) {
+	public SmartbinEntity(long lat, long lng, long concentration, long level) {
 		this();
+		key = Key.create();
 		this.concentration = concentration;
 		this.level = level;
 		this.lat = lat;
 		this.lng = lng;
-		this.key = key;
 	}
 		
 }
