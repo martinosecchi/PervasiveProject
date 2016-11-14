@@ -7,3 +7,23 @@ future work / discussion:
 		in regard of gas concentration, it is highly sensible on low concentration, less for high concentrations.
 		temperature: possible improvement, add a termometer to adjust sensor sensitivity, 
 		e.g. in summer it can get pretty hot in a  trash can exposed to the sun.
+		
+Report style - paper (abstract, intro, system etc.)
+
+What if? add data to wastebin - potential
+Few users - but hands-on exposure
+
+mention how systems can collaborate (maps for routes)
+in general adding a parameter to the 'logistics' problem - (smell)
+
+Api data could be used both for optimisation or just information in local scale
+
+two stories:
+	local/private
+	global/API
+Requirements for these
+success for these	
+
+dont promise too much - just state tht we will introduce a new angle
+
+'AGREE on requirements for prototype'

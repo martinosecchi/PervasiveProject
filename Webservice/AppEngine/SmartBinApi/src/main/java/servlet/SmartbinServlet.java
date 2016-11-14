@@ -27,6 +27,7 @@ public class SmartbinServlet extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
+<<<<<<< Updated upstream
 
 
 
@@ -75,6 +76,14 @@ public class SmartbinServlet extends HttpServlet {
 		return arg != null && arg != "";
 	}
 	
+=======
+		Gson gson = new Gson();
+		resp.setContentType("application/json");
+		List<SmartbinEntity> all = ofy().load().type(SmartbinEntity.class).list();
+		gson.toJson(all, resp.getWriter());
+	}
+
+>>>>>>> Stashed changes
 	// Process the http POST of the form
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -88,19 +97,31 @@ public class SmartbinServlet extends HttpServlet {
 		SmartbinEntity res = null;
 
 		//lookup tables by id
+<<<<<<< Updated upstream
 		if( sbe.key != null ) {
 			id = lookupId(sbe.key);
 			res = ofy().load().type(SmartbinEntity.class).id(id).now();
 		}
 		com.googlecode.objectify.Key<SmartbinEntity> k;
+=======
+		if( sbe.name != null ) res = ofy().load().type(SmartbinEntity.class).id(sbe.name).now();
+
+>>>>>>> Stashed changes
 		//new key or no key
 		if ( res == null ) {
 			k = ofy().save().entity(sbe).now();
 		}
-		//existing entity - merge
 		else {
+<<<<<<< Updated upstream
 			res = mergeBinEntity(res, sbe);
 			k = ofy().save().entity( res ).now();
+=======
+			//existing entity - merge
+			res.lat = sbe.lat;
+			res.lng = sbe.lng;
+			com.googlecode.objectify.Key<SmartbinEntity> k = ofy().save().entity(res).now();
+			gson.toJson( (SmartbinEntity)ofy().load().key(k).now(), resp.getWriter());
+>>>>>>> Stashed changes
 		}
 		updateMap(res.key, res.id);
 		gson.toJson( (SmartbinEntity)ofy().load().key(k).now(), resp.getWriter());

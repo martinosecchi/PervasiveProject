@@ -13,6 +13,15 @@
         <url-pattern>/r/bins</url-pattern>
     </servlet-mapping>
     
+	    <servlet>
+        <servlet-name>ContextServlet</servlet-name>
+        <servlet-class>servlet.ContextServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContextServlet</servlet-name>
+        <url-pattern>/r/ctx</url-pattern>
+    </servlet-mapping>
+	
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

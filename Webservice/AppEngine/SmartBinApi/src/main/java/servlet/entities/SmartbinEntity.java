@@ -9,13 +9,18 @@ import com.googlecode.objectify.annotation.Index;
 @Entity
 public class SmartbinEntity {
 	
+<<<<<<< Updated upstream
 	@Id public String key;
+=======
+	@Id
+	public String name;
+>>>>>>> Stashed changes
 	public long lat, lng;
-	public long concentration, level;
 
 	public SmartbinEntity() {
 	}
 	
+<<<<<<< Updated upstream
 	public SmartbinEntity(long lat, long lng, long concentration, long level) {
 		this();
 		key = Key.create();
@@ -23,6 +28,12 @@ public class SmartbinEntity {
 		this.level = level;
 		this.lat = lat;
 		this.lng = lng;
+=======
+	public SmartbinEntity(String name, long lat, long lng, long concentration, long level) {
+		this.lat = lat;
+		this.lng = lng;
+		this.name = name;
+>>>>>>> Stashed changes
 	}
 		
 }

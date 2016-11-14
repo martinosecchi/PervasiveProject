@@ -20,6 +20,7 @@ h1 {
     border-style: solid;
     border-color: red;
 	border-width: 2px;
+	text-align: center;
 }
 
 .pane {
@@ -50,6 +51,17 @@ h1 {
 	text-shadow: black;
 	font-weight: bolder;
 	background-color: rgb(102,102,102);
+}
+
+.bin {
+	display:inline-block;
+	width: 30%;
+	height: 70px;
+	margin: 0 auto;
+	border-radius: 15px;
+    border-style: solid;
+    border-color: blue;
+	border-width: 2px;
 }
 
 /* unvisited link */
