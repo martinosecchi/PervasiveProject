@@ -3,52 +3,64 @@ package com.smartbin.thrashcompanion;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.TextView;
+import android.widget.GridView;
 
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.smartbin.thrashcompanion.data.BinGridviewAdapter;
+import com.smartbin.thrashcompanion.data.StatFragment;
+import com.smartbin.thrashcompanion.web.ApiAdapter;
 
-public class MainActivity extends AppCompatActivity {
+import java.net.MalformedURLException;
+import java.util.Observable;
+import java.util.Observer;
 
-    TextView valueHolder;
-    DatabaseReference myRef;
+import servlet.entities.ContextEntity;
+import servlet.entities.SmartbinEntity;
+
+public class MainActivity extends AppCompatActivity implements Observer {
+    GridView mListView;
+    BinGridviewAdapter mListViewAdapter;
+    SmartbinEntity[] mListBinFromServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        valueHolder = (TextView) findViewById(R.id.bin_val);
-
-        FirebaseApp.initializeApp(this);
-
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("bin1");
-        fetch_data();
+        requestBeaconsFromWeb();
     }
 
-    protected void fetch_data() {
-        // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                Double value = dataSnapshot.getValue(Double.class);
-                valueHolder.setText(""+value);
-                Log.d("VV", "Value is: " + value);
+
+    private void requestBeaconsFromWeb(){
+        try {
+            ApiAdapter.getBins(this);
+        } catch (MalformedURLException e) {
+            Log.e("WEB", "Malformed url "+e);
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        if(data instanceof ContextEntity[] ) {
+            ApiAdapter.POSTER p = (ApiAdapter.POSTER) observable;
+            ContextEntity[] res = (ContextEntity[]) data;
+            StatFragment.newInstance(getApplicationContext(), p.name, res).show(getSupportFragmentManager(), "");
+        }
+        if(data instanceof SmartbinEntity[]) {
+            if(data == null){
+                Log.i("WEB", "No results");
+                return;
+            }
+            mListBinFromServer = (SmartbinEntity[]) data;
+            if(mListViewAdapter == null) {
+                //only display new beacons
+                mListView = (GridView) findViewById(R.id.bin_grid);
+                mListViewAdapter = new BinGridviewAdapter(this.getBaseContext(), mListBinFromServer);
+                mListView.setAdapter(mListViewAdapter);
             }
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("VV", "Failed to read value.", error.toException());
+            for (SmartbinEntity be : mListBinFromServer) {
+                Log.i("WEB FOUND ", be.name+" ("+ be.lat + ", " + be.lng + ")");
             }
-        });
+        }
     }
 }

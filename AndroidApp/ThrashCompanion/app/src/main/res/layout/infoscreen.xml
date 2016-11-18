@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@android:color/black"
+    >
+    <ImageView
+        android:layout_alignParentLeft="true"
+        android:layout_width="30dip"
+        android:layout_height="30dip"
+        android:layout_margin="8dip"
+        android:background="@android:drawable/ic_dialog_info"
+        android:backgroundTint="@android:color/holo_green_light"
+        />
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_marginTop="5dip"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:text="i_BinName"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_green_light"
+        android:id="@+id/info_bin_name"
+        />
+    <Button
+        android:layout_alignParentRight="true"
+        android:layout_width="30dip"
+        android:layout_height="30dip"
+        android:layout_margin="8dip"
+        android:background="@android:drawable/ic_delete"
+        android:layout_gravity="end"
+        android:id="@+id/info_dismiss"
+        />
+    <LinearLayout
+        android:layout_below="@id/info_bin_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thrash Levels"
+            android:textAlignment="center"
+            android:layout_margin="5dip"
+            android:background="@android:drawable/dialog_holo_dark_frame"
+            android:textColor="@android:color/holo_green_light"
+            />
+        <FrameLayout
+            android:id="@+id/frame_level"
+            android:layout_width="match_parent"
+            android:layout_height="170dip"
+            android:layout_margin="5dip"
+            >
+
+        </FrameLayout>
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Scent Levels"
+            android:textAlignment="center"
+            android:layout_margin="5dip"
+            android:background="@android:drawable/dialog_holo_dark_frame"
+            android:textColor="@android:color/holo_green_light"
+            />
+        <FrameLayout
+            android:id="@+id/frame_smell"
+            android:layout_width="match_parent"
+            android:layout_height="170dip"
+            android:layout_margin="5dip"
+            >
+        </FrameLayout>
+
+    </LinearLayout>
+</RelativeLayout>

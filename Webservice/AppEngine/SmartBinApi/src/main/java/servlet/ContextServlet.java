@@ -32,7 +32,7 @@ public class ContextServlet extends HttpServlet {
 			//String from_date = req.getParameter("date");
 			List<ContextEntity> ctxts = null;
 			if(bin_name != null) {
-				ctxts = ofy().load().type(ContextEntity.class).filter("bin =", bin_name).list();
+				ctxts = ofy().load().type(ContextEntity.class).filter("bin =", bin_name).order("bin").order("-date").list();
 			} else {
 				ctxts = ofy().load().type(ContextEntity.class).order("-date").list();
 			}
