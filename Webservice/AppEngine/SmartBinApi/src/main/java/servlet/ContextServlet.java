@@ -32,7 +32,9 @@ public class ContextServlet extends HttpServlet {
 			//String from_date = req.getParameter("date");
 			List<ContextEntity> ctxts = null;
 			if(bin_name != null) {
-				ctxts = ofy().load().type(ContextEntity.class).filter("name =", bin_name).order("-date").list();
+				ctxts = ofy().load().type(ContextEntity.class).filter("bin =", bin_name).list();
+			} else {
+				ctxts = ofy().load().type(ContextEntity.class).order("-date").list();
 			}
 			if(ctxts == null) throw new Exception("Contexts are null");
 			gson.toJson(ctxts, resp.getWriter());

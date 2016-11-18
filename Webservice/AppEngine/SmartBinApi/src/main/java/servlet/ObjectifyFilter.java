@@ -5,7 +5,7 @@ import javax.servlet.ServletContextListener;
 
 import com.googlecode.objectify.ObjectifyService;
 
-import servlet.entities.SmartbinEntity;
+import servlet.entities.*;
 
 public class ObjectifyFilter implements ServletContextListener {
 
@@ -14,6 +14,7 @@ public class ObjectifyFilter implements ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent arg0) {
 		ObjectifyService.register(SmartbinEntity.class);
+		ObjectifyService.register(ContextEntity.class);
 	}
 
 }

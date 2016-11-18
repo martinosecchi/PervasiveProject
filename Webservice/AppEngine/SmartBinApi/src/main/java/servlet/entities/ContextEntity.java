@@ -9,17 +9,18 @@ import com.googlecode.objectify.annotation.Index;
 public class ContextEntity {
 	
 	@Id
-	public long id;
+	public Long id;
+	@Index
 	public String bin;
 	@Index
 	public java.util.Date date;
-	public long concentration, level;
+	public float concentration, level;
 
 	public ContextEntity() {
 		date = new Date();
 	}
 	
-	public ContextEntity(String parent, long concentration, long level) {
+	public ContextEntity(String parent, float concentration, float level) {
 		this();
 		this.bin = parent;
 		this.concentration = concentration;

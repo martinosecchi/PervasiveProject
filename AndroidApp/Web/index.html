@@ -1,0 +1,38 @@
+<html>
+    <head>
+		<script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+		<script>
+			var config = {
+				apiKey: "AIzaSyBENZOmN2gSj73jYHvKcMkd6le5xdW1yEA",
+				authDomain: "smarterbin.firebaseapp.com",
+				databaseURL: "https://smarterbin.firebaseio.com",
+				storageBucket: "smarterbin.appspot.com",
+				messagingSenderId: "502186280581"
+			};
+			var firebase = firebase.initializeApp(config);
+			
+			var concRef = firebase.database().ref('bin1/concentration');
+			concRef.on('value',
+				function(snapshot) {
+				var c_el = document.getElementById("conc");
+					c_el.text = snapshot.val();
+				}
+			);
+
+			var levelRef = firebase.database().ref('bin1/level');
+			concRef.on('value',
+				function(snapshot) {
+				var l_el = document.getElementById("level");
+					l_el.text = snapshot.val();
+				}
+			);
+			  
+		</script>
+    </head>
+    <body>
+    <title>SmartBin</title>
+
+        <div id='conc'>A</div>        
+        <div id='level'>B</div>        
+    </body>
+</html>

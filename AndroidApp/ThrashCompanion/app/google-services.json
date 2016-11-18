@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "502186280581",
+    "firebase_url": "https://smarterbin.firebaseio.com",
+    "project_id": "smarterbin",
+    "storage_bucket": "smarterbin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502186280581:android:e2e613bdf27c20e9",
+        "android_client_info": {
+          "package_name": "com.smartbin.thrashcompanion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502186280581-bcv7e1uf7dckct3hv0fl2k9mi5vcmbtn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smartbin.thrashcompanion",
+            "certificate_hash": "2EA17F85280577EF03465C665C49C557414960F8"
+          }
+        },
+        {
+          "client_id": "502186280581-c8g3ki467s8fq1or4nqt5k1fm82j8ra5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJgh3c3QNi887RnkuhqwPN4jdAOM9vQqU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502186280581-c8g3ki467s8fq1or4nqt5k1fm82j8ra5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

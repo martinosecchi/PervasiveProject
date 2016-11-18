@@ -1,0 +1,11 @@
+@INPROCEEDINGS{6872422, 
+author={V. Catania and D. Ventura}, 
+booktitle={Open Innovations Association FRUCT, Proceedings of 15th Conference of}, 
+title={An approch for monitoring and smart planning of urban solid waste management using smart-M3 platform}, 
+year={2014}, 
+pages={24-31}, 
+abstract={Solid waste management is one of the most important challenges in urban areas throughout the world and it is becoming a critical issue in developing countries where a rapid increase in population has been observed. Waste collection is a complex process that requires the use of large amount of money and an elaborate management of logistics. In this paper an approch to smart waste collection is proposed able to improve and optimize the handling of solid urban waste. Context of smart waste management requires interconnection among heterogeneous devices and data sharing involving a large amount of people. Smart-M3 platform solves these problems offering a high degree of decoupling and scalability.Waste collection is made by real-time monitoring the level of bin's fullness through sensors placed inside the containers. This method enables to exempt from collecting semi-empty bins. Furthermore, incoming data can be provided to decisional algorithms in order to determine the optimal number of waste vehicles or bins to distribute in the territory. The presented solution gives important advantages for both service providers and consumers. The formers could obtain a sensible cost reduction. On the other hand, users may benefit from a higher level of service quality. In order to make users feel closer to their community, they can interact with the system to be aware about the fulness state of the nearest bins. Finally, a mechanism for collecting “green points” was introduced for encouraging citizens to recycle.}, 
+keywords={cost reduction;public utilities;town and country planning;waste management;Smart-M3 platform;cost reduction;data sharing;developing countries;green points;logistics;recycling;semiempty bins;service quality;smart planning;smart waste collection;urban areas;urban solid waste management;waste vehicles;Cities and towns;Intelligent sensors;Monitoring;Solids;Vehicles;Waste management}, 
+doi={10.1109/FRUCT.2014.6872422}, 
+ISSN={2305-7254}, 
+month={April},}
