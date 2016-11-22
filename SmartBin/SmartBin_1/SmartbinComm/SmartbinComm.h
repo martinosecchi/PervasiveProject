@@ -1,5 +1,5 @@
 #ifndef SMARTBINCOMM_H
-#DEFINE SMARTBINCOMM_H
+#define SMARTBINCOMM_H
 #include "arduino.h"
 
 #define PROX 0
