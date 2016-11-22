@@ -1,0 +1,80 @@
+h1 {
+	font-size: xx-large;
+	font-weight: bolder;
+	color: white;	
+}
+
+.f1 {
+	font-family: sans-serif;
+	font-variant: normal;
+	color: white;	
+}
+
+.stylish {
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px;
+	background-color: black;
+	width: 75%;
+    border-radius: 25px;
+    border-style: solid;
+    border-color: red;
+	border-width: 2px;
+	text-align: center;
+}
+
+.pane {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+	text-align: center;
+	border-style: solid 2px;
+    border-radius: 25px;
+	background-color: rgb(33,37,37);
+    padding: 10px; 
+    width: 95%;
+}
+
+.tbl {
+	margin-left:auto;
+	margin-right:auto;
+    border-radius: 5px;
+	width: 95%;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	background-color: white;
+}
+
+.tdHead {
+	margin-top: 10px;
+    border-radius: 25px;
+	text-shadow: black;
+	font-weight: bolder;
+	background-color: rgb(102,102,102);
+}
+
+.bin {
+	display:inline-block;
+	width: 30%;
+	height: 70px;
+	margin: 0 auto;
+	border-radius: 15px;
+    border-style: solid;
+    border-color: blue;
+	border-width: 2px;
+}
+
+/* unvisited link */
+a:link {
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    color: cyan;
+}
+
+/* mouse over link */
+a:hover {
+    color: hotpink;
+}

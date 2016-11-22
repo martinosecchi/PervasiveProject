@@ -1,9 +1,10 @@
 \BOOKMARK [1][-]{section*.4}{Introduction}{}% 1
 \BOOKMARK [1][-]{section*.5}{Related Work}{}% 2
-\BOOKMARK [1][-]{section*.6}{System Design}{}% 3
-\BOOKMARK [2][-]{section*.7}{sensory layer}{section*.6}% 4
-\BOOKMARK [2][-]{section*.8}{information layer}{section*.6}% 5
-\BOOKMARK [1][-]{section*.9}{Hardware Architecture}{}% 6
-\BOOKMARK [1][-]{section*.10}{Software Architecture}{}% 7
-\BOOKMARK [1][-]{section*.11}{Evaluation in Smelly Environments}{}% 8
-\BOOKMARK [1][-]{section*.12}{Conclusion}{}% 9
+\BOOKMARK [1][-]{section*.6}{Methodology}{}% 3
+\BOOKMARK [1][-]{section*.7}{System Design}{}% 4
+\BOOKMARK [2][-]{section*.8}{sensory layer}{section*.7}% 5
+\BOOKMARK [2][-]{section*.9}{information layer}{section*.7}% 6
+\BOOKMARK [1][-]{section*.10}{Hardware Architecture}{}% 7
+\BOOKMARK [1][-]{section*.11}{Software Architecture}{}% 8
+\BOOKMARK [1][-]{section*.12}{Evaluation in Smelly Environments}{}% 9
+\BOOKMARK [1][-]{section*.13}{Conclusion}{}% 10
