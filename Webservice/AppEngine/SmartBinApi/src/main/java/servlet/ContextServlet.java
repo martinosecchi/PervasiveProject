@@ -17,7 +17,8 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.googlecode.objectify.Result;
 
-
+import data.ObjectifyWrapper.BIN;
+import data.ObjectifyWrapper.CTX;
 import servlet.entities.ContextEntity;
 
 public class ContextServlet extends HttpServlet {
@@ -32,14 +33,12 @@ public class ContextServlet extends HttpServlet {
 			//String from_date = req.getParameter("date");
 			List<ContextEntity> ctxts = null;
 			if(bin_name != null) {
-				ctxts = ofy().load().type(ContextEntity.class).filter("bin =", bin_name).order("bin").order("-date").list();
-			} else {
-				ctxts = ofy().load().type(ContextEntity.class).order("-date").list();
-			}
-			if(ctxts == null) throw new Exception("Contexts are null");
+				ctxts = CTX.getByBin(bin_name);
+			} else throw new Exception("No bin_name was provided");
+			if(ctxts == null) throw new Exception("Contexts are null for bin: "+bin_name);
 			gson.toJson(ctxts, resp.getWriter());
 		} catch (Exception e) {
-			gson.toJson("Something went wrong... "+e, resp.getWriter());
+			resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "No contexts where found, "+e);
 		}
 
 	}
@@ -54,11 +53,8 @@ public class ContextServlet extends HttpServlet {
 				).readLine();
 
 		ContextEntity ce = gson.fromJson(rawJson, ContextEntity.class);
-		ContextEntity res = new ContextEntity(ce.bin, ce.concentration, ce.level);
-
-
-		com.googlecode.objectify.Key<ContextEntity> k = ofy().save().entity(ce).now();
-		gson.toJson( (ContextEntity)ofy().load().key(k).now() , resp.getWriter());
+		ContextEntity res = CTX.saveContext(ce);
+		gson.toJson( res , resp.getWriter());
 	}
 
 }
