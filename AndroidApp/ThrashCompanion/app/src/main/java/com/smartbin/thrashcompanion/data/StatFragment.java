@@ -72,7 +72,7 @@ public class StatFragment extends DialogFragment {
         snd.setData(barDatas[0]);
         YAxis leftAxis = snd.getAxisLeft();
         leftAxis.setAxisMinValue(0f); // this replaces setStartAtZero(true)
-        leftAxis.setAxisMaxValue(30f);
+       // leftAxis.setAxisMaxValue(30f);
         snd.getAxisRight().setEnabled(false);
         XAxis xAxis = snd.getXAxis();
         xAxis.setEnabled(false);
@@ -85,7 +85,7 @@ public class StatFragment extends DialogFragment {
         prs.setData(barDatas[1]);
         YAxis leftAxis1 = prs.getAxisLeft();
         leftAxis1.setAxisMinValue(0f);
-        leftAxis1.setAxisMaxValue(50f);// this replaces setStartAtZero(true)
+      //  leftAxis1.setAxisMaxValue(50f);// this replaces setStartAtZero(true)
         prs.getAxisRight().setEnabled(false);
         XAxis xAxis1 = prs.getXAxis();
         xAxis1.setEnabled(false);
@@ -107,7 +107,7 @@ public class StatFragment extends DialogFragment {
         List<String> soundLbl = new ArrayList<String>();
         ArrayList<BarEntry> pres = new ArrayList<BarEntry>();
         List<String> presLbl = new ArrayList<String>();
-        for(int i = 0; i < data.length; i++) {
+        for(int i = data.length-1; i >= 0; i--) {
             Date tm = data[i].date;
             sound.add(new BarEntry((float) data[i].level, snx));
             soundLbl.add(snx++, tm.toString() );

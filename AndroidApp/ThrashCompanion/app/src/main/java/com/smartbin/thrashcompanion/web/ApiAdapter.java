@@ -34,7 +34,7 @@ public class ApiAdapter<T> extends AsyncTask<URL, Long, T[]>{
         POSTER(String name) { this.name = name;}
     }
 
-    final static String remoteIP = "http://smartbinapi.appspot.com/";
+    final static String remoteIP = "http://smartbinapi.appspot.com";
     final static String localIP = "http://10.0.0.3:8888";
     final static String appIP = remoteIP;
 
@@ -98,6 +98,9 @@ public class ApiAdapter<T> extends AsyncTask<URL, Long, T[]>{
 
             conn.connect();
 
+            if (conn.getResponseCode() == HttpsURLConnection.HTTP_NO_CONTENT) {
+                return null;
+            }
             if (conn.getResponseCode() == HttpsURLConnection.HTTP_OK) {
                 // Do normal input or output stream reading
                 InputStream is = (InputStream) conn.getContent();
@@ -166,8 +169,8 @@ public class ApiAdapter<T> extends AsyncTask<URL, Long, T[]>{
     }
 
     public enum APIS {
-        CONTEXTS(appIP+"r/ctx"),
-        BINS(appIP+"r/bins");
+        CONTEXTS(appIP+"/r/ctx"),
+        BINS(appIP+"/r/bins");
 
         final String url;
 
@@ -201,9 +204,8 @@ public class ApiAdapter<T> extends AsyncTask<URL, Long, T[]>{
      Helper methods for instantiating generic array and element for return types and URLS
      ****************************************************************************/
     public static URL urlBuilderFilterByBinName(APIS api, String bin) throws MalformedURLException {
-        String res;
-        res ="?bin="+bin;
-        Log.v("URL" , res);
+        String res ="?bin="+bin;
+        Log.v("URL" , api.getUrl() + res);
         return new URL(api.getUrl() + res);
     }
 

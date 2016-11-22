@@ -1,16 +1,15 @@
 package servlet.entities;
 
-import java.util.Date;
-
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class SmartbinEntity {
 	@Id
 	public String name;
-	public long lat, lng;
+	public Long lat, lng;
+	
+	public float calibration, concentration, level;
 
 	public SmartbinEntity() {
 	}
@@ -19,6 +18,10 @@ public class SmartbinEntity {
 		this.lat = lat;
 		this.lng = lng;
 		this.name = name;
+	}
+	public SmartbinEntity(String name, long lat, long lng, float calibration) {
+		this(name, lat, lng);
+		this.calibration = calibration;
 	}
 		
 }

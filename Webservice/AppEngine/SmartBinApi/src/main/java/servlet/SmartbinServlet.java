@@ -18,6 +18,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.repackaged.com.google.gson.Gson;
 import com.googlecode.objectify.Result;
 
+import data.ObjectifyWrapper.BIN;
 import servlet.entities.SmartbinEntity;
 
 public class SmartbinServlet extends HttpServlet {
@@ -27,7 +28,7 @@ public class SmartbinServlet extends HttpServlet {
 			throws IOException {
 		Gson gson = new Gson();
 		resp.setContentType("application/json");
-		List<SmartbinEntity> all = ofy().load().type(SmartbinEntity.class).list();
+		List<SmartbinEntity> all = BIN.getAll();
 		gson.toJson(all, resp.getWriter());
 	}
 
@@ -35,26 +36,15 @@ public class SmartbinServlet extends HttpServlet {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		Gson gson = new Gson();
-		com.googlecode.objectify.Key<SmartbinEntity> k;
+
 		String rawJson = new BufferedReader(
 				new InputStreamReader( req.getInputStream() )
 				).readLine();
 
 		SmartbinEntity sbe = gson.fromJson(rawJson, SmartbinEntity.class);
-		SmartbinEntity res = null;
-		if( sbe.name != null ) res = ofy().load().type(SmartbinEntity.class).id(sbe.name).now();
-
-		//new key or no key
-		if ( res == null ) {
-			k = ofy().save().entity(sbe).now();
-		}
-		else {
-			//existing entity - merge
-			res.lat = sbe.lat;
-			res.lng = sbe.lng;
-			k = ofy().save().entity(res).now();
-		}
-		gson.toJson( (SmartbinEntity)ofy().load().key(k).now(), resp.getWriter());
+		SmartbinEntity res = BIN.saveBin(sbe);
+		
+		gson.toJson( res, resp.getWriter());
 	}
 
 }

@@ -40,8 +40,8 @@ import servlet.entities.SmartbinEntity;
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bin_grid_item, parent, false);
             }
             TextView tname = (TextView)convertView.findViewById(R.id.b_name);
-//            TextView tcocn = (TextView)convertView.findViewById(R.id.b_conc);
-//            TextView tlvl = (TextView)convertView.findViewById(R.id.b_level);
+            TextView tcocn = (TextView)convertView.findViewById(R.id.b_conc);
+            TextView tlvl = (TextView)convertView.findViewById(R.id.b_level);
 
             convertView.findViewById(R.id.b_frame).setOnClickListener(new View.OnClickListener() {
                 final Context mContext = parent.getContext();
@@ -56,8 +56,19 @@ import servlet.entities.SmartbinEntity;
             });
 
             tname.setText(bc.name);
-//            tcocn.setText(bc.getMajor());
-//            tlvl.setText(bc.getMinor());
+
+            float dc = bc.calibration - bc.concentration;
+
+            if(dc < 0f)
+                convertView.setBackgroundColor(
+                    getContext().getResources().getColor(android.R.color.holo_red_light)
+                );
+            else convertView.setBackgroundColor(
+                    getContext().getResources().getColor(android.R.color.holo_green_light)
+            );
+
+            tcocn.setText("Concentration: "+bc.concentration);
+            tlvl.setText("Thrash Level: "+bc.level);
             return convertView;
         }
 }
