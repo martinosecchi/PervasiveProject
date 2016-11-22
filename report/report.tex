@@ -2,25 +2,23 @@
 
 % Arabic page numbers for submission. 
 % Remove this line to eliminate page numbers for the camera ready copy
-%\pagenumbering{arabic}
+\pagenumbering{arabic}
 
 
-% Load basic packages
 \usepackage{balance}  % to better equalize the last page
 \usepackage{graphics} % for EPS, load graphicx instead
 \usepackage{times}    % comment if you want LaTeX's default font
 \usepackage{url}      % llt: nicely formatted URLs
 \usepackage{color}
+\usepackage[version=3]{mhchem}
 
-% llt: Define a global style for URLs, rather that the default one
+
 \makeatletter
 \def\url@leostyle{%
   \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\small\bf\ttfamily}}}
 \makeatother
 \urlstyle{leo}
 
-
-% To make various LaTeX processors do the right thing with page size.
 \def\pprw{8.5in}
 \def\pprh{11in}
 \special{papersize=\pprw,\pprh}
@@ -47,12 +45,10 @@ urlcolor=black,
 breaklinks=true,
 }
 
-% create a shortcut to typeset table headings
 \newcommand\tabhead[1]{\small\textbf{#1}}
 \newcommand\todo[1]{\textcolor{red}{#1}}
 
 
-% End of preamble. Here it comes the document.
 \begin{document}
 
 \title{Smart Bin - An Odor Oriented Approach to Waste Management}
@@ -84,13 +80,7 @@ breaklinks=true,
 \input{ch/intro.tex}
 
 \section{Related Work}
-This is not the first paper about Smart Waste Management Systems (WMS).
-Other researches explored interesting IoT approaches to the problem, mostly in relation to planning garbage collection and / or waste reduction.
-\todo{...many, pick one or two... like in Australia, France} implemented an RFID and weight  based approach for a real time automated WMS, with the main focus on bringing down management costs and facilitate automating waste identification.
-\todo{ citation to korean guys } In another study from South Korea, the main approach was to identify food waste in a selected area of Seoul and give citizens incentive to waste less food by fining them based on the amounts of waste they dispose.
-The infrastructure is similar to other systems, with a centralized server and a host of devices providing data to this server.
-Then the server provides data for applications such as management utilities or phone apps.
-\todo{ cite catania} In another study, Vincenzo Catania and his colleagues used a Smart-M3 Platform and sensor enhanced bins in Catania, Italy with the main focus on urban planning, smart collection and  monitoring of urban solid waste. In this case, the information that was collected was on the location of the trash can, level of fullness, and weight of the waste.
+\input{ch/rel_work.tex}
 
 \section{Methodology}
 insert this somewhere meaningful..
