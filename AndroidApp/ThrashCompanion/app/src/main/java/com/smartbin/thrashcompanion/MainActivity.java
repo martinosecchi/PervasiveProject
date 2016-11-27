@@ -44,10 +44,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
             ApiAdapter.POSTER p = (ApiAdapter.POSTER) observable;
             ContextEntity[] res = (ContextEntity[]) data;
             if(res == null) {
-
                 return;
             }
-            StatFragment.newInstance(getApplicationContext(), p.name, res).show(getSupportFragmentManager(), "");
+            SmartbinEntity[] sbe = new SmartbinEntity[]{ mListViewAdapter.getByName(p.name) };
+            StatFragment.newInstance(getApplicationContext(), sbe, res).show(getSupportFragmentManager(), "");
         }
         if(data instanceof SmartbinEntity[]) {
             if(data == null){

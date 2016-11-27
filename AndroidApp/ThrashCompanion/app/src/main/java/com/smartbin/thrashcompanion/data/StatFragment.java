@@ -1,8 +1,10 @@
 package com.smartbin.thrashcompanion.data;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,21 +13,19 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.smartbin.thrashcompanion.R;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 import servlet.entities.ContextEntity;
+import servlet.entities.SmartbinEntity;
 
 /**
  * Created by Ivan on 26-Mar-16.
@@ -42,11 +42,11 @@ public class StatFragment extends DialogFragment {
      * @param data
      * @return
      */
-    public static StatFragment newInstance(final Context c, final String label, final ContextEntity[] data) {
+    public static StatFragment newInstance(final Context c, final SmartbinEntity[] be, final ContextEntity[] data) {
         final StatFragment dialogFrag = new StatFragment();
         Bundle args = new Bundle();
         args.putSerializable(_DATA_KEY, data);
-        args.putString(_LABEL_KEY, label);
+        args.putSerializable(_LABEL_KEY, be);
         dialogFrag.setArguments(args);
         return dialogFrag;
     }
@@ -55,77 +55,91 @@ public class StatFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.infoscreen, container, false);
 
-        final String label = getArguments().getString(_LABEL_KEY);
+        final SmartbinEntity be = ((SmartbinEntity[]) getArguments().getSerializable(_LABEL_KEY))[0];
+        Log.i("STAT", "Calibration: "+be.calibration);
         TextView lbl = (TextView) v.findViewById(R.id.info_bin_name);
-        lbl.setText(label);
+        lbl.setText(be.name);
 
         final ContextEntity[] data = (ContextEntity[]) getArguments().getSerializable(_DATA_KEY);
 
         //Data
-        BarData[] barDatas = generateBarData(data);
+        Object[] dd = genData(data, "Odour", "Levels");
 
-        // create a new chart object
-        BarChart snd = new BarChart(getActivity());
-        snd.setDescription("");
-        snd.setDrawGridBackground(false);
-        snd.setDrawBarShadow(false);
-        snd.setData(barDatas[0]);
-        YAxis leftAxis = snd.getAxisLeft();
-        leftAxis.setAxisMinValue(0f); // this replaces setStartAtZero(true)
-       // leftAxis.setAxisMaxValue(30f);
-        snd.getAxisRight().setEnabled(false);
-        XAxis xAxis = snd.getXAxis();
-        xAxis.setEnabled(false);
+        LineChart scent = genLineChart((ArrayList<String>) dd[0], (LineDataSet) dd[1]);
+        LineChart level = genLineChart((ArrayList<String>) dd[0], (LineDataSet) dd[2]);
 
-        // create a new chart object
-        BarChart prs = new BarChart(getActivity());
-        prs.setDescription("");
-        prs.setDrawGridBackground(false);
-        prs.setDrawBarShadow(false);
-        prs.setData(barDatas[1]);
-        YAxis leftAxis1 = prs.getAxisLeft();
-        leftAxis1.setAxisMinValue(0f);
-      //  leftAxis1.setAxisMaxValue(50f);// this replaces setStartAtZero(true)
-        prs.getAxisRight().setEnabled(false);
-        XAxis xAxis1 = prs.getXAxis();
-        xAxis1.setEnabled(false);
+
+
+        LimitLine ll = new LimitLine(be.calibration, "Normal values");
+        ll.setLineColor(Color.RED);
+        ll.setLineWidth(2f);
+        ll.setTextColor(Color.YELLOW);
+        ll.setTextSize(10f);
 
         // programatically add the chart
-        FrameLayout sound = (FrameLayout) v.findViewById(R.id.frame_level);
-        sound.addView(snd);
+        FrameLayout levelChartFrame = (FrameLayout) v.findViewById(R.id.frame_level);
+        levelChartFrame.addView(level);
 
-        FrameLayout pres = (FrameLayout) v.findViewById(R.id.frame_smell);
-        pres.addView(prs);
+        FrameLayout scentChartFrame = (FrameLayout) v.findViewById(R.id.frame_smell);
+        scentChartFrame.addView(scent);
 
         return v;
     }
 
-    protected BarData[] generateBarData(ContextEntity[] data) {
-        IBarDataSet[] set = new IBarDataSet[2];
-        int snx = 0, psx = 0;
-        ArrayList<BarEntry> sound = new ArrayList<BarEntry>();
-        List<String> soundLbl = new ArrayList<String>();
-        ArrayList<BarEntry> pres = new ArrayList<BarEntry>();
-        List<String> presLbl = new ArrayList<String>();
-        for(int i = data.length-1; i >= 0; i--) {
-            Date tm = data[i].date;
-            sound.add(new BarEntry((float) data[i].level, snx));
-            soundLbl.add(snx++, tm.toString() );
-            pres.add(new BarEntry((float) data[i].concentration, psx));
-            presLbl.add(psx++, tm.toString() );
+    protected LineChart genLineChart(ArrayList<String> labels, LineDataSet values) {
+        LineChart lc = new LineChart(getActivity());
+
+        lc.setDrawGridBackground(false);
+        LineData lds = new LineData(values);
+        lc.setData( new LineData(values) );
+        lc.setDescription( null );
+
+        //Y axis format
+        YAxis ylc = lc.getAxisLeft();
+        ylc.setAxisMinimum(0f);
+        ylc.setLabelCount(6, true);
+        ylc.setTextColor(Color.GREEN);
+
+        //X axis format
+        XAxis xlc = lc.getXAxis();
+        xlc.setLabelCount(12, true);
+        xlc.setEnabled(true);
+        xlc.setTextColor(Color.GREEN);
+
+        lc.setClickable(false);
+
+        return lc;
+    }
+
+    /**
+     * Returns Arraylist of string labels, and datasets of concentrations and levels
+     * @param raw
+     * @param label
+     * @return Object[3]
+     */
+    protected Object[] genData(ContextEntity[] raw, String label, String level) {
+        ArrayList<Entry> vals = new ArrayList<>();
+        ArrayList<Entry> vals2 = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();
+
+        int index = 0;
+        for(int i = raw.length-1; i >=0; i--) {
+            vals.add( new Entry(index, raw[i].concentration) );
+            vals2.add( new Entry(index++, raw[i].level) );
+            labels.add( raw[i].date.toString() );
         }
 
-        BarDataSet ds1 = new BarDataSet(sound, "Thrash Levels");
-        ds1.setColors( new int[]{ColorTemplate.VORDIPLOM_COLORS[0]} );
-        ds1.setDrawValues(false);
-        set[0] = ds1;
-        BarDataSet ds2 = new BarDataSet(pres, "Odour Levels");
-        ds2.setColors(new int[]{ColorTemplate.VORDIPLOM_COLORS[3]});
-        ds2.setDrawValues(false);
-        set[1] = ds2;
+        LineDataSet ds = new LineDataSet(vals, label);
+        ds.setDrawFilled(true);
+        ds.setFillColor(Color.BLUE);
+        ds.setDrawCircles(false);
 
-        BarData[] d = new BarData[]{new BarData(  soundLbl, ds1), new BarData(presLbl, ds2)};
-        return d;
+        LineDataSet ds2 = new LineDataSet(vals2, level);
+        ds.setDrawFilled(true);
+        ds.setFillColor(Color.CYAN);
+        ds.setDrawCircles(false);
+
+        return new Object[]{labels,ds, ds2};
     }
 
     @Override

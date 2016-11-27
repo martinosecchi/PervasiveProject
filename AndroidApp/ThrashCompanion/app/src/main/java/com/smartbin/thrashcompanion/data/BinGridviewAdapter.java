@@ -15,6 +15,7 @@ import com.smartbin.thrashcompanion.R;
 import com.smartbin.thrashcompanion.web.ApiAdapter;
 
 import java.net.MalformedURLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Observer;
 import java.util.Set;
@@ -22,6 +23,12 @@ import java.util.Set;
 import servlet.entities.SmartbinEntity;
 
     public class BinGridviewAdapter extends ArrayAdapter<SmartbinEntity> {
+
+        private HashMap<String, SmartbinEntity> reverseLookup = new HashMap<>();
+
+        public SmartbinEntity getByName(String name) {
+            return reverseLookup.get(name);
+        }
 
         public BinGridviewAdapter(Context context, Set<SmartbinEntity> listThings) {
             this(context, listThings.toArray(new SmartbinEntity[listThings.size()]));
@@ -69,6 +76,7 @@ import servlet.entities.SmartbinEntity;
 
             tcocn.setText("Concentration: "+bc.concentration);
             tlvl.setText("Thrash Level: "+bc.level);
+            reverseLookup.put(bc.name, bc);
             return convertView;
         }
 }
