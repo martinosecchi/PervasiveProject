@@ -5,30 +5,24 @@ package com.smartbin.thrashcompanion.data;
  */
 
 import android.content.Context;
+import android.graphics.PorterDuff;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smartbin.thrashcompanion.R;
-import com.smartbin.thrashcompanion.web.ApiAdapter;
 
-import java.net.MalformedURLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Observer;
 import java.util.Set;
 
 import servlet.entities.SmartbinEntity;
 
-    public class BinGridviewAdapter extends ArrayAdapter<SmartbinEntity> {
-
-        private HashMap<String, SmartbinEntity> reverseLookup = new HashMap<>();
-
-        public SmartbinEntity getByName(String name) {
-            return reverseLookup.get(name);
-        }
+public class BinGridviewAdapter extends ArrayAdapter<SmartbinEntity> {
+        IonWrapper.ContextConsumer consumer;
 
         public BinGridviewAdapter(Context context, Set<SmartbinEntity> listThings) {
             this(context, listThings.toArray(new SmartbinEntity[listThings.size()]));
@@ -39,44 +33,46 @@ import servlet.entities.SmartbinEntity;
         public BinGridviewAdapter(Context context, SmartbinEntity[] items) {
             super(context, 0, items);
         }
+        public BinGridviewAdapter(Context context, SmartbinEntity[] items, IonWrapper.ContextConsumer callback) {
+            super(context, 0, items);
+            consumer = callback;
+        }
 
         @Override
         public View getView(final int position, View convertView, final ViewGroup parent) {
-            final SmartbinEntity bc = getItem(position);
             if(convertView == null){
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.bin_grid_item, parent, false);
             }
+            final SmartbinEntity bc = getItem(position);
+            ImageView bframe = (ImageView) convertView.findViewById(R.id.b_frame);
             TextView tname = (TextView)convertView.findViewById(R.id.b_name);
             TextView tcocn = (TextView)convertView.findViewById(R.id.b_conc);
             TextView tlvl = (TextView)convertView.findViewById(R.id.b_level);
 
-            convertView.findViewById(R.id.b_frame).setOnClickListener(new View.OnClickListener() {
-                final Context mContext = parent.getContext();
+            bframe.setOnClickListener(new View.OnClickListener() {
+                final FragmentActivity mContext = (FragmentActivity) parent.getContext();
+
                 @Override
                 public void onClick(View v) {
-                    try {
-                        ApiAdapter.getContextsByBinName((Observer)mContext, bc.name);
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    }
+                        IonWrapper.getContextsForBin(mContext, consumer, bc);
                 }
             });
 
-            tname.setText(bc.name);
+            if(bc != null) {
 
-            float dc = bc.calibration - bc.concentration;
+                tname.setText(bc.name);
 
-            if(dc < 0f)
-                convertView.setBackgroundColor(
-                    getContext().getResources().getColor(android.R.color.holo_red_light)
-                );
-            else convertView.setBackgroundColor(
-                    getContext().getResources().getColor(android.R.color.holo_green_light)
-            );
+                imgsetColor(bframe, UIUtil.getBinColor(bc.concentration) );
 
-            tcocn.setText("Concentration: "+bc.concentration);
-            tlvl.setText("Thrash Level: "+bc.level);
-            reverseLookup.put(bc.name, bc);
+                tcocn.setText("Concentration: "+bc.concentration);
+                tlvl.setText("Thrash Level: "+bc.level);
+            }
             return convertView;
         }
+
+    private void imgsetColor(ImageView root, int color)
+    {
+        root.setImageResource(R.drawable.bin);
+        root.setColorFilter( getContext().getResources().getColor(color), PorterDuff.Mode.SRC_ATOP );
+    }
 }

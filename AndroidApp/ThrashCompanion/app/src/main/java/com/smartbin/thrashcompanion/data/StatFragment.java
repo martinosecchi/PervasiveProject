@@ -56,12 +56,12 @@ public class StatFragment extends DialogFragment {
         View v = inflater.inflate(R.layout.infoscreen, container, false);
 
         final SmartbinEntity be = ((SmartbinEntity[]) getArguments().getSerializable(_LABEL_KEY))[0];
-        Log.i("STAT", "Calibration: "+be.calibration);
         TextView lbl = (TextView) v.findViewById(R.id.info_bin_name);
         lbl.setText(be.name);
-
+        Log.i("STAT", "Calibration: "+be.calibration);
         final ContextEntity[] data = (ContextEntity[]) getArguments().getSerializable(_DATA_KEY);
-
+        Log.i("STAT", "data prepared "+data.length);
+        if(data == null || data.length == 0) return v;
         //Data
         Object[] dd = genData(data, "Odour", "Levels");
 
