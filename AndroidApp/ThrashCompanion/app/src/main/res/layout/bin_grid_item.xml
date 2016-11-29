@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/b_frame" xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:orientation="vertical"
+    android:background="#3310FFFF"
     android:layout_centerHorizontal="true"
-    android:background="@android:color/holo_green_light"
     >
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/b_frame"
+            android:layout_margin="10dip"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:foreground="@drawable/bin"
+            android:foregroundTint="@android:color/holo_green_light"
+            />
         <TextView android:id="@+id/b_name"
             android:textColor="@android:color/white"
             android:textSize="20dp"
             android:textAlignment="center"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -18,11 +27,15 @@
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/b_name"
+            android:textStyle="bold"
             />
         <TextView android:id="@+id/b_level"
             android:textColor="@android:color/white"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/b_conc"
+            android:textStyle="bold"
             />
-</LinearLayout>
+</RelativeLayout>

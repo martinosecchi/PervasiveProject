@@ -1,70 +1,58 @@
 package com.smartbin.thrashcompanion;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.widget.GridView;
+import android.support.v4.app.FragmentActivity;
+import android.widget.FrameLayout;
 
-import com.smartbin.thrashcompanion.data.BinGridviewAdapter;
-import com.smartbin.thrashcompanion.data.StatFragment;
-import com.smartbin.thrashcompanion.web.ApiAdapter;
+import com.smartbin.thrashcompanion.fragment.AdminFragment;
+import com.smartbin.thrashcompanion.fragment.FragmentSwitcher;
+import com.smartbin.thrashcompanion.fragment.SingleFragment;
 
-import java.net.MalformedURLException;
-import java.util.Observable;
-import java.util.Observer;
-
-import servlet.entities.ContextEntity;
 import servlet.entities.SmartbinEntity;
 
-public class MainActivity extends AppCompatActivity implements Observer {
-    GridView mListView;
-    BinGridviewAdapter mListViewAdapter;
-    SmartbinEntity[] mListBinFromServer;
+public class MainActivity extends FragmentActivity implements FragmentSwitcher {
+    FrameLayout placeholder;
+    AdminFragment admin_frag;
+    SingleFragment single_frag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        requestBeaconsFromWeb();
-    }
+        placeholder = (FrameLayout) findViewById(R.id.main_frame);
 
+        //find fragment
+        admin_frag = (AdminFragment) getSupportFragmentManager().findFragmentByTag(AdminFragment.TAG);
+        single_frag = (SingleFragment) getSupportFragmentManager().findFragmentByTag(SingleFragment.TAG);
 
-    private void requestBeaconsFromWeb(){
-        try {
-            ApiAdapter.getBins(this);
-        } catch (MalformedURLException e) {
-            Log.e("WEB", "Malformed url "+e);
-            e.printStackTrace();
+        //check for nulls
+        admin_frag = admin_frag == null ? new AdminFragment() : admin_frag;
+        if( single_frag == null ) {
+            single_frag =  new SingleFragment();
+            single_frag.setArguments( new Bundle() );
         }
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(placeholder.getId(), admin_frag, admin_frag.TAG).addToBackStack(null)
+                .commit();
     }
 
     @Override
-    public void update(Observable observable, Object data) {
-        if(data instanceof ContextEntity[] ) {
-            ApiAdapter.POSTER p = (ApiAdapter.POSTER) observable;
-            ContextEntity[] res = (ContextEntity[]) data;
-            if(res == null) {
-                return;
-            }
-            SmartbinEntity[] sbe = new SmartbinEntity[]{ mListViewAdapter.getByName(p.name) };
-            StatFragment.newInstance(getApplicationContext(), sbe, res).show(getSupportFragmentManager(), "");
-        }
-        if(data instanceof SmartbinEntity[]) {
-            if(data == null){
-                Log.i("WEB", "No results");
-                return;
-            }
-            mListBinFromServer = (SmartbinEntity[]) data;
-            if(mListViewAdapter == null) {
-                //only display new beacons
-                mListView = (GridView) findViewById(R.id.bin_grid);
-                mListViewAdapter = new BinGridviewAdapter(this.getBaseContext(), mListBinFromServer);
-                mListView.setAdapter(mListViewAdapter);
-            }
-
-            for (SmartbinEntity be : mListBinFromServer) {
-                Log.i("WEB FOUND ", be.name+" ("+ be.lat + ", " + be.lng + ")");
-            }
-        }
+    public void load_admin_page() {
+        getSupportFragmentManager().beginTransaction().addToBackStack(null)
+                .replace(placeholder.getId(), admin_frag, admin_frag.TAG).commit();
     }
+
+    @Override
+    public void load_single_page(SmartbinEntity sbe) {
+        // Create fragment and give it an argument specifying the article it should show
+        Bundle args = single_frag.getArguments();
+        args.putSerializable(single_frag._BIN_KEY, new SmartbinEntity[]{sbe} );
+
+        getSupportFragmentManager().beginTransaction().addToBackStack(null)
+                .replace(placeholder.getId(), single_frag, single_frag.TAG).commit();
+    }
+
+
 }
