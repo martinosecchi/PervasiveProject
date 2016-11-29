@@ -5,6 +5,7 @@ package com.smartbin.thrashcompanion.data;
  */
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.smartbin.thrashcompanion.R;
 
 import java.util.List;
 import java.util.Set;
+
 import servlet.entities.SmartbinEntity;
 
 public class BinGridviewAdapter extends ArrayAdapter<SmartbinEntity> {
@@ -60,18 +62,17 @@ public class BinGridviewAdapter extends ArrayAdapter<SmartbinEntity> {
 
                 tname.setText(bc.name);
 
-                float dc = bc.calibration - bc.concentration;
-
-                if(dc < 0f) {
-                    bframe.setColorFilter( getContext().getResources().getColor(android.R.color.holo_red_dark) );
-                }
-                else {
-                    bframe.setColorFilter( getContext().getResources().getColor(android.R.color.holo_green_dark) );
-                }
+                imgsetColor(bframe, UIUtil.getBinColor(bc.concentration) );
 
                 tcocn.setText("Concentration: "+bc.concentration);
                 tlvl.setText("Thrash Level: "+bc.level);
             }
             return convertView;
         }
+
+    private void imgsetColor(ImageView root, int color)
+    {
+        root.setImageResource(R.drawable.bin);
+        root.setColorFilter( getContext().getResources().getColor(color), PorterDuff.Mode.SRC_ATOP );
+    }
 }

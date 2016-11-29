@@ -1,5 +1,6 @@
 package com.smartbin.thrashcompanion.fragment;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,62 +12,56 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.smartbin.thrashcompanion.R;
-
-import servlet.entities.SmartbinEntity;
+import com.smartbin.thrashcompanion.data.UIUtil;
 
 /**
  * Created by Ivan on 28-Nov-16.
  */
 
 public class SingleFragment extends Fragment {
-    public static final String TAG = "single_bin_view_frag";
-    public final String _BIN_KEY = "single_bin_item_to_populate";
+    public static final String TAG = "single_bin_view_frag", _BIN_KEY = "single_bin_item_to_populate";
     private float max_lvl = 100;
-
-
-    TextView tvcon, tvlvl;
-    ImageView ivbin;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_single, container, false);
-    }
+        Log.i(TAG, "Create view");
+        View v = inflater.inflate(R.layout.fragment_single, container, false);
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        TextView tvcon = (TextView) view.findViewById(R.id.single_conc);
-        ImageView ivbin = (ImageView) view.findViewById(R.id.single_bin);
-        TextView tvlvl = (TextView) view.findViewById(R.id.single_level);
+        TextView tvcon = (TextView) v.findViewById(R.id.single_conc);
+        TextView tvlvl = (TextView) v.findViewById(R.id.single_level);
 
-        SmartbinEntity sbe = ((SmartbinEntity[]) (getArguments().getSerializable(_BIN_KEY)))[0];
+        String[] sbe = null;
+        if( getArguments() != null && getArguments().getStringArray(_BIN_KEY) != null )
+            sbe = getArguments().getStringArray(_BIN_KEY);
 
         if(sbe == null) {
             Log.i(TAG, "Smartbin was null");
-            return;
+            return v;
         }
-        Log.i(TAG, sbe.name+", lvl "+sbe.level+", conc "+sbe.concentration);
+        Log.i(TAG, sbe[0]+", lvl "+sbe[3]+", conc "+sbe[2]+", calib "+sbe[1]);
 
-        tvcon.setText( sbe.concentration + " ppm" );
-        tvlvl.setText( (sbe.level / max_lvl) * 100 + " %" );
+        float c = Float.parseFloat(sbe[2]);
 
-        float dc = sbe.calibration - sbe.concentration;
+        msetColor(v, UIUtil.getBinColor(c));
 
-        if(dc < 0f) {
-            Log.i(TAG, "Set color red");
-            msetColor(view, android.R.color.holo_red_dark);
-        }
-        else {
-            Log.i(TAG, "Set color green");
-            msetColor(view, android.R.color.holo_green_light);
-        }
+        tvcon.setText( ""+sbe[2] + " ppm" );
+        tvlvl.setText( ""+(Float.parseFloat(sbe[3]) / max_lvl) * 100 );
+        Log.i(TAG, "Update text values");
+
+        return v;
     }
 
-    private void msetColor(View p, int color) {
-        ((ImageView) p.findViewById(R.id.single_bin)).setColorFilter( color );
-        ((TextView) p.findViewById(R.id.single_conc)).setTextColor( color );
-        ((TextView) p.findViewById(R.id.single_level)).setTextColor( color );
+
+    private void msetColor(View root, int color)
+    {
+        Log.i(TAG, "Got high ppm");
+
+        ImageView iv = ((ImageView) root.findViewById(R.id.single_bin));
+        iv.setImageResource(R.drawable.bin);
+        iv.setColorFilter( getResources().getColor(color), PorterDuff.Mode.SRC_ATOP );
+        ((TextView) root.findViewById(R.id.single_conc)).setTextColor( getResources().getColor(color) );
+        ((TextView) root.findViewById(R.id.single_level)).setTextColor( getResources().getColor(color) );
     }
 
 }

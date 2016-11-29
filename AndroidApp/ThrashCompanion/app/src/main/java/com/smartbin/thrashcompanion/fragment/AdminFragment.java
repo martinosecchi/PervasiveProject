@@ -1,6 +1,5 @@
 package com.smartbin.thrashcompanion.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,7 +23,7 @@ import servlet.entities.SmartbinEntity;
  */
 
 public class AdminFragment extends Fragment implements IonWrapper.SmartbinConsumer, IonWrapper.ContextConsumer {
-    public static String TAG = "adm_frag_tg";
+    public static final String TAG = "adm_frag_tg";
     GridView mListView;
     BinGridviewAdapter mListViewAdapter;
     SmartbinEntity[] mListBinFromServer;
@@ -34,22 +33,28 @@ public class AdminFragment extends Fragment implements IonWrapper.SmartbinConsum
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.admin_layout, container, false);
         mListView = (GridView) v.findViewById(R.id.bin_grid);
-        try {
-            IonWrapper.getBins(getActivity(), this);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(mListBinFromServer == null) {
+            try {
+                IonWrapper.getBins(getActivity(), this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return v;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            IonWrapper.getBins(getActivity(), this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        Log.i(TAG, "View restored");
+        mListView = (GridView) getView().findViewById(R.id.bin_grid);
+        if(mListBinFromServer == null) {
+            try {
+                IonWrapper.getBins(getActivity(), this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else setupGridViewAdapter(mListView, mListBinFromServer, this);
     }
 
     @Override
@@ -67,15 +72,24 @@ public class AdminFragment extends Fragment implements IonWrapper.SmartbinConsum
     public void post(SmartbinEntity[] responseData) {
         Log.i(TAG, "Post SmartbinEntity fired");
         if(responseData == null || responseData.length == 0) {
-            mListViewAdapter.notifyDataSetChanged();
+            Log.i(TAG, "Post SmartbinEntity[] null or empty");
             return;
         }
         mListBinFromServer = responseData;
         if(mListViewAdapter == null) {
-            //only display new beacons
-            mListViewAdapter = new BinGridviewAdapter(getContext(), mListBinFromServer, this);
-            mListView.setAdapter(mListViewAdapter);
+            setupGridViewAdapter(mListView, mListBinFromServer, this);
         }
-        mListViewAdapter.notifyDataSetChanged();
+    }
+
+    private void setupGridViewAdapter(final GridView gv, final SmartbinEntity[] data, final IonWrapper.ContextConsumer cc) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mListViewAdapter = new BinGridviewAdapter(getContext(), data, cc);
+                gv.setAdapter(mListViewAdapter);
+                mListViewAdapter.notifyDataSetChanged();
+                Log.i(TAG, "Gridview refreshed");
+            }
+        });
     }
 }

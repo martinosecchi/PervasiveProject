@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="110dp"
     android:orientation="vertical"
     android:background="#3310FFFF"
     android:layout_centerHorizontal="true"
@@ -11,12 +11,10 @@
             android:layout_margin="10dip"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:foreground="@drawable/bin"
-            android:foregroundTint="@android:color/holo_green_light"
             />
         <TextView android:id="@+id/b_name"
             android:textColor="@android:color/white"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textAlignment="center"
             android:textStyle="bold"
             android:layout_width="match_parent"
