@@ -91,7 +91,7 @@ public class MainActivity extends FragmentActivity implements FragmentSwitcher {
                 return;
         }
         last_frag = tag;
-        getSupportFragmentManager().beginTransaction().addToBackStack(null)
+        getSupportFragmentManager().beginTransaction()
                 .replace(placeholder.getId(), f, tag).commit();
     }
 
