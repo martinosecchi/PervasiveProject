@@ -1,13 +1,12 @@
 \BOOKMARK [1][-]{section*.4}{Introduction}{}% 1
 \BOOKMARK [1][-]{section*.5}{Related Work}{}% 2
-\BOOKMARK [1][-]{section*.6}{Methodology}{}% 3
-\BOOKMARK [1][-]{section*.7}{System Design}{}% 4
-\BOOKMARK [2][-]{section*.8}{Sensory layer}{section*.7}% 5
-\BOOKMARK [2][-]{section*.9}{Communication and Data layer}{section*.7}% 6
-\BOOKMARK [2][-]{section*.10}{Data Consumer}{section*.7}% 7
-\BOOKMARK [1][-]{section*.11}{Hardware Architecture}{}% 8
-\BOOKMARK [1][-]{section*.12}{Software Architecture}{}% 9
-\BOOKMARK [1][-]{section*.13}{Evaluation}{}% 10
-\BOOKMARK [2][-]{section*.14}{System Evaluation}{section*.13}% 11
-\BOOKMARK [1][-]{section*.15}{Conclusion}{}% 12
-\BOOKMARK [1][-]{section*.16}{REFERENCES }{}% 13
+\BOOKMARK [1][-]{section*.6}{System Design}{}% 3
+\BOOKMARK [2][-]{section*.7}{Sensory layer and Communication module}{section*.6}% 4
+\BOOKMARK [2][-]{section*.8}{Data layer}{section*.6}% 5
+\BOOKMARK [2][-]{section*.9}{Data Consumer}{section*.6}% 6
+\BOOKMARK [1][-]{section*.10}{Hardware Architecture}{}% 7
+\BOOKMARK [1][-]{section*.11}{Software Architecture}{}% 8
+\BOOKMARK [1][-]{section*.12}{Evaluation}{}% 9
+\BOOKMARK [2][-]{section*.13}{System Evaluation}{section*.12}% 10
+\BOOKMARK [1][-]{section*.14}{Conclusion}{}% 11
+\BOOKMARK [1][-]{section*.15}{REFERENCES }{}% 12
