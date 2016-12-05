@@ -1,7 +1,8 @@
 Our approach includes the additional parameter of scent as a factor.
 Biology supports our claim due to the fact that some materials are decomposed over time.
-This decomposition has side effects, namely the production of certain gasses.
-Gasses can have multiple characteristics - hence a variety of sensors able to detect gasses exist.
+This decomposition has side effects, namely the production of certain gasses,
+which can be detected by a variety of sensors due to their multiple characteristics of density and conductivity.
+%Gasses can have multiple characteristics - hence a variety of sensors able to detect gasses exist.
 We are interested in the gasses easily detectable by humans - namely the ones with a characteristic smell.
 %Humans have a hard time detecting the odour-less ones.
 
@@ -14,10 +15,10 @@ Our system is composed of four main components, a \textit{sensory layer}, a \tex
 %\end{itemize}
 
 \subsection{Sensory layer and Communication module}
-The sensory layer has two sensors and one communication device. The sensors detect the state of the bin.
+The sensory layer has two sensors (figure \ref{fig:sensors}) and one communication device. The sensors detect the state of the bin.
 Our approach relies on two kinds of information related to the state of the bin: smell and fill level.
 For this reason, the sensory part of the system is of key importance, since it enables the information to be perceived and registered by the system.
-An odor detection sensor is able to capture volatile organic compounds (VOCs) and other gases, typical bioproducts of food decomposition, commonly associated with bad smell. 
+An odor detection sensor is able to capture volatile organic compounds (VOCs) and other gases, typical by products of food decomposition, commonly associated with bad smell. 
 Some examples are Hydrogen Sulphide (\ce{H_{2}S}), Ammonia(\ce{NH_3}), Toluene (\ce{CH_3}) and others.
 The smartbin sends the raw values of VOC concentration to the data layer.
 
@@ -26,6 +27,13 @@ This type of information is processed in the sensory layer to reflect the amount
 
 The raw values are then processed and formatted into something understandable for our data layer.
 The last step is to send the values using the communication module. In this study a WiFi adapter was used.
+
+\begin{figure}
+\centering
+\includegraphics[scale=.05]{img/IMG_20161130_163302}
+\caption{The sensors.}
+\label{fig:sensors}
+\end{figure}
 
 \subsection{Data layer}
 The data layer is a simple restfull webservice for collecting the data and storing it in a database, making it accessible to potential consumers.
@@ -46,3 +54,14 @@ The ambient display is much more simple, it just displays a color of a shade fro
 In our system we use an android phone to run in both modes, so pressing on the screen even in ambient display mode will give the user the extra functionality of knowing trash level and emission level.
 
 Ideally the ambient display can be placed in a strategic location inside the house, for example by the door or on the fridge, where people can be reminded of the trash status and act accordingly.
+
+Figure \ref{fig:interaction} shows an example of interaction with the ambient display.
+
+\begin{figure}
+\centering
+\includegraphics[scale=.05]{img/IMG-20161130-WA0000}
+\includegraphics[scale=.05]{img/IMG-20161130-WA0004}
+\includegraphics[scale=.05]{img/IMG-20161130-WA0002}
+\caption{Interaction with ambient display}
+\label{fig:interaction}
+\end{figure}
