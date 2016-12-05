@@ -31,6 +31,14 @@ The components interact using the client-server model over the web, in a cloud-b
 \label{fig:colorcodes}
 \end{figure}
 
+On the \textbf{bin}, the gas sensor first needs to go through a warm-up period of about 15-20 minutes, during which the sensor is energised. The resistance registered by the sensor drops sharply for the first minutes after energising, regardless of the presence of gases. This behaviour is commonly known as \textit{Initial Action}, and could cause a system to mistakenly report presence of gases during the first minutes of activity\cite{tgs2602}.
+
+After the warm-up period, the system will go through a period of \textit{calibration} (5 minutes), during which the value Ro (resistance measured by the gas sensor in clean air) is computed as an average of 300 samples.
+During this period the sensor has to be kept in "clean air", or  in an environment considered to be in a base condition, because later measurements will rely on this value.
+
+After warm up and calibration, the gas concentration sensed by the sensor will be in the form of a ratio \textit{Rs/Ro}, where Rs is the resistance measured by the sensor at a given time and Ro is the constant value detected in clean air.
+This means that if the gas concentrations perceived by the sensor are very similar as the ones in clean air, the ratio will be close to 1.
+The more the values Rs and Ro differ, the more far from 1 the ratio will be.
 
 The android client can provide statistics about different smartbins - it only supports  presentation of data in its current form.
 It supports two modes: \textbf{Admin mode} and \textbf{Single Bin mode}.
