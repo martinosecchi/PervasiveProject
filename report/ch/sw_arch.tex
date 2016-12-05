@@ -27,12 +27,15 @@ The components interact using the client-server model over the web, in a cloud-b
 \begin{figure}
 \centering
 \includegraphics{img/app_colors_nb}
-\caption{Image of the color codes ranging, from deviation under the norm to deviation over the norm} 
+\caption{Image of the color codes ranging from deviation under the norm to deviation over the norm} 
 \label{fig:colorcodes}
 \end{figure}
 
 
-The android client can provide statistics about different smartbins - it only supports  presentation of data in its current form.
+\textit{ \textbf{The cloud service}} is hosted using Google App Engine, it is a simple website that can present the state of SmartBins in the system. It also exposes a REST style API - which can provide SmartBins and Contexts.
+It uses technologies such as HTML, JavaScript, Java Servlets and schemaless persistant storage.
+
+\textit{\textbf{The android client}} can provide statistics about different smartbins - it only supports  presentation of data in its current form.
 It supports two modes: \textbf{Admin mode} and \textbf{Single Bin mode}.
 Admin mode includes overview of every single bin and graphs for each bin. The graphs are only available as long as enough context information is present see figure~\ref{fig:clientmodes}.
 
@@ -41,3 +44,4 @@ Admin mode includes overview of every single bin and graphs for each bin. The gr
  The bin state is divided into five different categories, this is represented visually as colors.
  The order is, \textit{blue}, \textit{dark green}, \textit{green}, \textit{orange}, and \textit{red}, as seen on figure~\ref{fig:colorcodes}.
 The middle one, \textit{green}, is when the concentration is deviating with at most 5\%, next tier \textit{dark green} and \textit{orange} is a deviation of at most 25\%, and the last ones \textit{blue} and \textit{red} are deviations above 25\%.
+
