@@ -8,6 +8,24 @@ The components interact using the client-server model over the web, in a cloud-b
 \label{fig:architecture}
 \end{figure}
 
+\textit{ \textbf{On the bin}}, the gas sensor first needs to go through a warm-up period of about 15-20 minutes, during which the sensor is energised. The resistance registered by the sensor drops sharply for the first minutes after energising, regardless of the presence of gases. This behaviour is commonly known as \textit{Initial Action}, and could cause a system to mistakenly report presence of gases during the first minutes of activity\cite{tgs2602}.
+
+After the warm-up period, the system will go through a period of \textit{calibration} (5 minutes), during which the value Ro (resistance measured by the gas sensor in clean air) is computed as an average of 300 samples.
+During this period the sensor has to be kept in "clean air", or  in an environment considered to be in a base condition, because later measurements will rely on this value.
+
+After warm up and calibration, the gas concentration sent by the module will be in the form of a ratio \textit{Rs/Ro}, where Rs is the resistance measured by the sensor at a given time and Ro is the constant value detected in clean air.
+This means that if the gas concentrations registered by the sensor are very similar as the ones in clean air, the ratio will be close to 1.
+The more the values Rs and Ro differ, the more far from 1 the ratio will be.
+
+\textit{\textbf{The cloud service}} is hosted using Google App Engine, it is a simple website that can present the state of SmartBins in the system. It also exposes a REST style API - which can provide SmartBins and Contexts.
+
+A SmartBin represents the hardware instance of a smartbin, this includes information such as location expressed as coordinates, unique identifier, 'calibration' which is the intial air quality level (in "clean" air, a value to which compare later measurements) and meta information about the last associated context.
+This ensures that status of every bin is readily available without having to traverse the contexts.
+
+The contexts model a snapshot of a bin's state at a given time, this is thus timestamps, associated bin, fill level and concentration. This data is the backbone for being able to provide graphs about the bins.
+
+The service uses technologies such as HTML, JavaScript, Java Servlets and schemeless persistent storage.
+
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{img/screen_admin}
@@ -24,25 +42,16 @@ The components interact using the client-server model over the web, in a cloud-b
 \label{fig:colorcodes}
 \end{figure}
 
-\textit{ \textbf{On the bin}}, the gas sensor first needs to go through a warm-up period of about 15-20 minutes, during which the sensor is energised. The resistance registered by the sensor drops sharply for the first minutes after energising, regardless of the presence of gases. This behaviour is commonly known as \textit{Initial Action}, and could cause a system to mistakenly report presence of gases during the first minutes of activity\cite{tgs2602}.
-
-After the warm-up period, the system will go through a period of \textit{calibration} (5 minutes), during which the value Ro (resistance measured by the gas sensor in clean air) is computed as an average of 300 samples.
-During this period the sensor has to be kept in "clean air", or  in an environment considered to be in a base condition, because later measurements will rely on this value.
-
-After warm up and calibration, the gas concentration sent by the module will be in the form of a ratio \textit{Rs/Ro}, where Rs is the resistance measured by the sensor at a given time and Ro is the constant value detected in clean air.
-This means that if the gas concentrations registered by the sensor are very similar as the ones in clean air, the ratio will be close to 1.
-The more the values Rs and Ro differ, the more far from 1 the ratio will be.
-
-\textit{\textbf{The cloud service}} is hosted using Google App Engine, it is a simple website that can present the state of SmartBins in the system. It also exposes a REST style API - which can provide SmartBins and Contexts.
-It uses technologies such as HTML, JavaScript, Java Servlets and schemeless persistent storage.
-
 \textit{\textbf{The android client}} can provide statistics about different smartbins - it only supports  presentation of data in its current form.
-It supports two modes: \textbf{Admin mode} and \textbf{Single Bin mode}.
-Admin mode includes an overview of every single bin and graphs for each one. The graphs are only available as long as enough context information is present see figure~\ref{fig:clientmodes}.
 
- Single bin mode provides a view of the current bin state.
+It uses third part libraries to simplify the REST api access and the graphing of data.
+We used Ion\footnote{Android Asynchronous Networking and Image Loading: https://github.com/koush/ion} to easily access our REST resources and MPAndroidChart\footnote{MPAndroidChart: https://github.com/PhilJay/MPAndroidChart} for presenting the graphs.
+
+It supports two modes: \textit{Admin mode} and \textit{Single Bin mode}.
+\textit{Admin mode} includes an overview of every single bin and graphs for each one. The graphs are only available as long as enough context information is present see figure~\ref{fig:clientmodes}.\\
+\textit{Single bin} mode provides a view of the current bin state.
  
- The bin state is divided into five different categories, this is represented visually as colors.
+ The bin state is divided into five different categories, this is represented visually as colors.\\
  The order is, \textit{blue}, \textit{dark green}, \textit{green}, \textit{orange}, and \textit{red}, as seen on figure~\ref{fig:colorcodes}.
 The middle one, \textit{green}, is when the concentration is deviating with at most 5\%, next tier \textit{dark green} and \textit{orange} is a deviation of at most 25\%, and the last ones \textit{blue} and \textit{red} are deviations above 25\%.
 

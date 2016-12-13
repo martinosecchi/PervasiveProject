@@ -10,6 +10,8 @@
 \usepackage{times}    % comment if you want LaTeX's default font
 \usepackage{url}      % llt: nicely formatted URLs
 \usepackage{color}
+\usepackage{pdfpages}
+
 %\usepackage[version=4]{mhchem}
 \newcommand*\ce[1]{\ensuremath{\mathrm{#1}}}
 
@@ -51,7 +53,9 @@ breaklinks=true,
 
 
 \begin{document}
-
+\pagenumbering{gobble}
+\includepdf{img/itu_front}
+\pagenumbering{arabic}
 \title{Smart Bin - An Odor Oriented Approach to Waste Management}
 
 \numberofauthors{2}
