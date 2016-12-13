@@ -19,7 +19,7 @@ The more the values Rs and Ro differ, the more far from 1 the ratio will be.
 
 \textit{\textbf{The cloud service}} is hosted using Google App Engine, it is a simple website that can present the state of SmartBins in the system. It also exposes a REST style API - which can provide SmartBins and Contexts.
 
-A SmartBin represents the hardware instance of a smartbin, this includes information such as location expressed as coordinates, unique identifier, 'calibration' which is the intial air quality level (in "clean" air, a value to which compare later measurements) and meta information about the last associated context.
+A SmartBin represents the hardware instance of a smartbin, this includes information such as location expressed as coordinates, unique identifier, 'calibration' which is the intial air quality level ($Ro$) and meta information about the last associated context.
 This ensures that status of every bin is readily available without having to traverse the contexts.
 
 The contexts model a snapshot of a bin's state at a given time, this is thus timestamps, associated bin, fill level and concentration. This data is the backbone for being able to provide graphs about the bins.
